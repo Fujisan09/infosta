@@ -1,0 +1,69 @@
+/*
+  見た目の初期値（themeTokens）
+  ─────────────────────────────
+  色・文字・余白・動きは、このファイルの変数だけで変えられるようにしています。
+  値は brief/03_design_and_acceptance.md の初期案です。岡さんの取材後に調整してください。
+  確認版の「表示を調整」で試した値は、そこから「CSSとして書き出す」でコピーできます。
+
+  注意：--color-accent（明るいオレンジ）は文字色に使わないでください。
+        背景とのコントラストが足りず、本文が読みにくくなります。
+*/
+:root {
+  /* ── 色 ── */
+  --color-bg: #FFFAF2;        /* ページの背景：暖かい白 */
+  --color-surface: #FFFFFF;   /* ヘッダー・写真の周り・本棚の壁 */
+  --color-text: #242B27;      /* 本文・見出し・図の主なラベル */
+  --color-muted: #5F655F;     /* 写真の説明・出典・補助ラベル */
+  --color-accent: #EC870D;    /* 小さな印・選択状態の補助色（ロゴのオレンジ系） */
+  --color-button: #91440D;    /* 主なボタン・リンク（白い文字を載せる濃いオレンジ） */
+  --color-button-text: #FFFFFF;
+  --color-tint: #FFF0DC;      /* 理念の短文・選択した分野・関連する人物の背景 */
+  --color-border: #DED8CE;    /* 区切り線 */
+  --color-shelf: #D9C7AE;     /* 本棚の棚板（マップ用に追加） */
+  --color-strength: #6E3410;  /* 「強み」の区画の背景（木の棚のような濃い茶。白い文字を載せる） */
+  --color-strength-accent: #FFC37A; /* 「強み」の区画の数字・矢印（濃い茶の上で読める明るいオレンジ） */
+  --color-focus: #91440D;     /* キーボード操作時の枠 */
+
+  /* ── 文字 ── */
+  --font-family-base: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic Medium", "YuGothic", "Yu Gothic", Meiryo, "Noto Sans JP", "Noto Sans CJK JP", sans-serif;
+  --font-size-body: 17px;     /* 本文（16〜18pxを目安） */
+  --font-size-small: 15px;    /* 補助文 */
+  --font-size-min: 14px;      /* これより小さくしない */
+  --line-height-body: 1.8;    /* 本文の行間（1.7〜1.9） */
+  --line-height-heading: 1.45;
+  --heading-scale: 1;         /* 見出し全体の大きさの倍率 */
+  --font-size-h1: calc(clamp(32px, 2.6vw + 19px, 52px) * var(--heading-scale));
+  --font-size-h2: calc(clamp(26px, 1.8vw + 17px, 40px) * var(--heading-scale));
+  --font-size-h3: calc(clamp(20px, 0.5vw + 17px, 24px) * var(--heading-scale));
+
+  /* ── 余白・画面幅 ── */
+  --page-max: 1120px;         /* ページ全体の最大幅 */
+  --gutter: 20px;             /* 左右の余白（スマホ） */
+  --section-space: 64px;      /* 大きなセクションの間（スマホ） */
+  --reading-width: 40rem;     /* 長い文章の読み幅 */
+  --radius-small: 4px;
+  --radius: 10px;
+  --header-height: 64px;
+
+  /* ── 動き ── */
+  --motion-fast: 160ms;       /* 選択や開閉の変化（120〜200ms） */
+  --motion-ease: cubic-bezier(.2, .7, .2, 1);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 40px;
+    --section-space: 96px;
+    --header-height: 76px;
+  }
+}
+
+@media (max-width: 340px) {
+  :root { --gutter: 16px; }
+}
+
+/* 動きを減らす設定の人には、変化をほぼなくす */
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion-fast: 1ms; }
+}
+:root[data-motion="none"] { --motion-fast: 1ms; }
