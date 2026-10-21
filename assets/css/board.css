@@ -332,6 +332,7 @@ button.word[aria-pressed="true"] { background: var(--color-tint); box-shadow: in
   color: var(--color-text);
   text-decoration: none;
 }
+.space-card-head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
 .space-card-title { color: var(--color-button); font-size: 18px; font-weight: 700; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
 .space-card-purpose { color: var(--color-muted); font-size: 15px; line-height: 1.65; }
 .space-card-heat { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 2px; color: var(--color-muted); font-size: 14px; }

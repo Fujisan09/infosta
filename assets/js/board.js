@@ -551,7 +551,10 @@
     var list = el('ul', { class: 'space-list' }, spaces.map(function (s) {
       var words = WM.compute(s.posts, WM_OPTIONS({ maxWords: 5 }));
       return el('li', null, [el('a', { class: 'space-card', href: '#talk/' + encodeURIComponent(s.id) }, [
-        el('span', { class: 'space-card-title', text: s.title }),
+        el('span', { class: 'space-card-head' }, [
+          el('span', { class: 'space-card-title', text: s.title }),
+          s.sample ? el('span', { class: 'sample-tag', text: T.sampleTag }) : null
+        ]),
         s.purpose ? el('span', { class: 'space-card-purpose', text: s.purpose }) : null,
         el('span', { class: 'space-card-heat' }, [
           heatNode(s.week, max),
@@ -635,7 +638,7 @@
     p.appendChild(el('p', { class: 'back-link' }, [el('a', { href: '#talk', text: T.backToTalk })]));
     p.appendChild(el('header', { class: 'panel-head' }, [
       el('h1', { id: 'space-title', tabindex: '-1', text: space.title }),
-      space.purpose ? el('p', { text: space.purpose }) : null
+      space.purpose || space.sample ? el('p', null, [space.sample ? el('span', { class: 'sample-tag', text: T.sampleTag }) : null, space.sample && space.purpose ? ' ' : null, space.purpose || null]) : null
     ]));
 
     var modeButton = function (mode, label) {

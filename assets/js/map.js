@@ -207,7 +207,7 @@
     if (!labels.length) domainList = el('p', null, L.unclassified);
     addItem(pd.list, L.domains, domainList);
 
-    // 岡さんの話から書き起こした、本人確認前のメモ（内部メモを含める設定のときだけ）
+    // 本人の確認前のメモ（内部メモを含める設定のときだけ）
     if (p.okaView) {
       var oka = valueNode(p.okaView);
       if (p.okaView && p.okaView.source) {
