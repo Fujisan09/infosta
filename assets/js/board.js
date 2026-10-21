@@ -456,7 +456,10 @@
     var allPosts = [];
     spaces.forEach(function (s) { allPosts = allPosts.concat(s.posts); });
     var rows = WM.compute(allPosts, WM_OPTIONS({ maxWords: 12 }));
-    var hot = el('ul', { class: 'hot-spaces' }, spaces.slice(0, 3).map(function (s) {
+    // 今週書き込みのあった議題を、多い順に5つまで（少ないときは、書き込みのない議題も含めて3つ）
+    var active = spaces.filter(function (s) { return s.week > 0; });
+    var shown = (active.length >= 3 ? active : spaces).slice(0, 5);
+    var hot = el('ul', { class: 'hot-spaces' }, shown.map(function (s) {
       return el('li', null, [
         el('a', { href: '#talk/' + encodeURIComponent(s.id), text: s.title }),
         el('span', { class: 'hot-count', text: fill(T.weekCount, { count: s.week }) })

@@ -74,8 +74,11 @@
   var resultsDesc = root.querySelector('[data-results-desc]');
   var resetButton = root.querySelector('[data-domain-reset]');
   var live = root.querySelector('[data-results-live]');
+  var list = root.querySelector('[data-people-list]');
+  var moreButton = root.querySelector('[data-people-more]');
 
-  var state = { domain: null };
+  // expanded：分野を選んでいないときの一覧を、全員まで広げたか（最初は数人だけを出す）
+  var state = { domain: null, expanded: false };
 
   function selectDomain(id, options) {
     options = options || {};
@@ -104,6 +107,14 @@
       var on = Boolean(state.domain) && members[spine.dataset.personOpen] === true && shelf && shelf.dataset.shelf !== state.domain;
       spine.classList.toggle('is-related', on);
     });
+
+    // 分野を選んでいないときは、一覧の最初の数人だけを出し、「すべての理事を表示する」で全員にする
+    var collapsed = Boolean(moreButton) && !state.domain && !state.expanded;
+    if (list) list.classList.toggle('is-collapsed', collapsed);
+    if (moreButton) {
+      moreButton.hidden = !collapsed;
+      moreButton.setAttribute('aria-expanded', String(!collapsed));
+    }
 
     resultsLabel.textContent = selected ? selected.label : L.all;
     resultsCount.textContent = visible + L.countSuffix;
@@ -135,6 +146,17 @@
     selectDomain(null);
     if (resultsTitle) resultsTitle.focus();
   });
+
+  if (moreButton) {
+    moreButton.addEventListener('click', function () {
+      // 広げたあと、新しく見えるようになった最初の人へフォーカスを移す
+      var folded = rows.filter(function (r) { return !r.hidden && r.offsetParent === null; });
+      state.expanded = true;
+      selectDomain(state.domain, { announce: false });
+      var first = folded[0] && folded[0].querySelector('.person-open');
+      if (first) first.focus();
+    });
+  }
 
   /* ───── 理事の紹介 ───── */
   var dialog = document.getElementById('person-dialog');

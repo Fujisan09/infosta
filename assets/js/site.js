@@ -1,6 +1,8 @@
 /*
   情報ステーション：ページ全体の操作
+  - ヘッダーの線（スクロールしたとき）
   - スマホ・タブレット幅のメニュー
+  - スマホの画面の下の案内（相談する・関わり方を見る）
   - メールアドレス・電話番号のコピー
   - 確認版の「表示の調整」欄（色・文字サイズ・動きの試し調整）
   文章はここに書かず、content/*.json に書いてください。
@@ -10,24 +12,38 @@
 
   var doc = document.documentElement;
 
+  /* ───── ヘッダー：少しスクロールしたら下に線を出す ───── */
+  var header = document.querySelector('.site-header');
+  var onScrollHeader = function () {
+    if (header) header.classList.toggle('is-scrolled', window.scrollY > 4);
+  };
+  onScrollHeader();
+  window.addEventListener('scroll', onScrollHeader, { passive: true });
+
   /* ───── メニュー ───── */
   var menuButton = document.querySelector('.menu-button');
   var nav = document.getElementById('site-nav');
+  var menuIsOpen = false;
+  var onMenuChange = function () {};
   if (menuButton && nav) {
     var menuLabel = menuButton.querySelector('.menu-label');
     menuButton.hidden = false;
-    // 横向きのスマートフォンなど画面の高さが低いとき、メニューが画面の外にはみ出さないよう高さを合わせる
+    // スマホ・タブレット幅では、メニューをヘッダーの下から画面の下までの一覧にする（横向きでもはみ出さない）
     var fitNav = function () {
-      if (!nav.classList.contains('is-open')) { nav.style.maxHeight = ''; return; }
+      if (!nav.classList.contains('is-open')) { nav.style.height = ''; return; }
       var top = nav.getBoundingClientRect().top;
-      nav.style.maxHeight = Math.max(160, Math.floor(window.innerHeight - top - 8)) + 'px';
+      nav.style.height = Math.max(160, window.innerHeight - top) + 'px';
     };
     var setMenu = function (open, returnFocus) {
+      menuIsOpen = open;
       menuButton.setAttribute('aria-expanded', String(open));
       nav.classList.toggle('is-open', open);
+      // 開いている間は、後ろのページがスクロールしないようにする
+      doc.classList.toggle('menu-open', open);
       fitNav();
       if (menuLabel) menuLabel.textContent = open ? menuButton.dataset.labelClose : menuButton.dataset.labelOpen;
       if (!open && returnFocus) menuButton.focus();
+      onMenuChange();
     };
     menuButton.addEventListener('click', function () {
       setMenu(menuButton.getAttribute('aria-expanded') !== 'true');
@@ -47,6 +63,60 @@
     var onWide = function () { if (wide.matches) setMenu(false); };
     if (wide.addEventListener) wide.addEventListener('change', onWide);
     else if (wide.addListener) wide.addListener(onWide);
+  }
+
+  /* ───── いま読んでいる区画を、メニューで示す ───── */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('#site-nav a[href^="#"]'));
+  if (navLinks.length && 'IntersectionObserver' in window) {
+    var byId = {};
+    navLinks.forEach(function (a) {
+      var id = a.getAttribute('href').slice(1);
+      var section = document.getElementById(id);
+      if (section) byId[id] = a;
+    });
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var link = byId[entry.target.id];
+        if (!link) return;
+        if (entry.isIntersecting) {
+          navLinks.forEach(function (a) { if (a !== link) a.removeAttribute('aria-current'); });
+          link.setAttribute('aria-current', 'location');
+        } else if (link.getAttribute('aria-current')) {
+          link.removeAttribute('aria-current');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' }); // 画面の中ほどにある区画を「いま」とする
+    Object.keys(byId).forEach(function (id) { spy.observe(document.getElementById(id)); });
+  }
+
+  /* ───── スマホ：画面の下の案内（最初の画面のボタンが見えなくなってから出し、相談窓口とフッターでは隠す） ───── */
+  var mobileCta = document.querySelector('[data-mobile-cta]');
+  if (mobileCta && 'IntersectionObserver' in window) {
+    var heroActions = document.querySelector('.hero-actions');
+    var ends = [document.getElementById('contact'), document.querySelector('.site-footer')].filter(Boolean);
+    var pastHero = false;
+    var endInView = {};
+    var updateCta = function () {
+      var atEnd = Object.keys(endInView).some(function (k) { return endInView[k]; });
+      mobileCta.classList.toggle('is-visible', pastHero && !atEnd && !menuIsOpen);
+    };
+    onMenuChange = updateCta;
+    mobileCta.hidden = false;
+    if (heroActions) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          // ボタンが画面の上へ出ていったときだけ「過ぎた」とする（まだ下にあるときは出さない）
+          pastHero = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        });
+        updateCta();
+      }).observe(heroActions);
+    }
+    ends.forEach(function (el, i) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { endInView[i] = entry.isIntersecting; });
+        updateCta();
+      }).observe(el);
+    });
   }
 
   /* ───── メールアドレス・電話番号のコピー ───── */
@@ -208,7 +278,7 @@
     var bg = current('--color-bg');
     var checks = [
       ['ボタンの文字', ratio(current('--color-button'), current('--color-button-text'))],
-      ['リンク', ratio(current('--color-button'), bg)],
+      ['リンク', ratio(current('--color-link'), bg)],
       ['本文', ratio(current('--color-text'), bg)],
       ['補助文', ratio(current('--color-muted'), bg)],
       ['強みの区画', ratio(current('--color-strength'), '#FFFFFF')]

@@ -18,8 +18,9 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="assets/img/infosta-symbol.gif" type="image/gif">
-<link rel="stylesheet" href="assets/css/tokens.css?v=c59ebe19">
-<link rel="stylesheet" href="assets/css/site.css?v=c59ebe19">
+<link rel="stylesheet" href="assets/css/fonts-page.css?v=48048726">
+<link rel="stylesheet" href="assets/css/tokens.css?v=48048726">
+<link rel="stylesheet" href="assets/css/site.css?v=48048726">
 <script>document.documentElement.classList.replace('no-js','js');try{if(localStorage.getItem('infosta-preview-motion')==='none')document.documentElement.dataset.motion='none';}catch(e){}</script>
 </head>
 <body>
@@ -46,6 +47,7 @@
 <section class="hero" id="top" aria-labelledby="hero-title">
   <div class="container hero-grid">
     <div class="hero-text">
+      <p class="hero-kicker">千葉県船橋市から、全国のまちへ</p>
       <h1 id="hero-title">本をきっかけに、<wbr>人が出会う。</h1>
       
       <p class="hero-description">情報ステーションは、千葉県船橋市のNPO法人です。小さな民間図書館づくりと地域の活動のサポートを通じて、世代をこえて人が出会い、関われる場を育てています。</p>
@@ -56,6 +58,8 @@
       <figcaption class="visually-hidden" id="concept-label">情報ステーションの活動のめぐり</figcaption>
       <div class="concept-stage">
         <svg class="concept-ring" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
+      <ellipse class="concept-orbit" cx="200" cy="200" rx="190" ry="96" transform="rotate(-24 200 200)"/>
+      <ellipse class="concept-orbit" cx="200" cy="200" rx="190" ry="96" transform="rotate(24 200 200)"/>
       <circle class="concept-disk" cx="200" cy="200" r="76"/>
       <circle class="concept-line" cx="200" cy="200" r="118" transform="rotate(-135 200 200)"/>
       <circle class="concept-dot" cx="167.5" cy="86.6" r="4.2" style="--d:0"/><circle class="concept-dot" cx="232.5" cy="86.6" r="3" style="--d:1"/><circle class="concept-dot" cx="313.4" cy="167.5" r="4.2" style="--d:2"/><circle class="concept-dot" cx="313.4" cy="232.5" r="3" style="--d:3"/><circle class="concept-dot" cx="232.5" cy="313.4" r="4.2" style="--d:4"/><circle class="concept-dot" cx="167.5" cy="313.4" r="3" style="--d:5"/><circle class="concept-dot" cx="86.6" cy="232.5" r="4.2" style="--d:6"/><circle class="concept-dot" cx="86.6" cy="167.5" r="3" style="--d:7"/>
@@ -67,9 +71,11 @@
       </div>
     </figure>
   </div>
-  <figure class="hero-photo">
-    <img src="assets/img/bookshelf-panorama.jpg" width="2813" height="700" alt="木の本棚に本が並ぶ、明るい図書館の室内" fetchpriority="high" style="object-position:30% 45%">
-  </figure>
+  <div class="container">
+    <figure class="hero-photo">
+      <img src="assets/img/bookshelf-panorama.jpg" width="2813" height="700" alt="木の本棚に本が並ぶ、明るい図書館の室内" fetchpriority="high" style="object-position:30% 45%">
+    </figure>
+  </div>
 </section>
 
 <section class="strength" id="strength" aria-labelledby="strength-title">
@@ -106,7 +112,7 @@
           </div>
         </div>
       </figure>
-      <ul class="strength-facts"><li><span class="fact-value">約14万冊</span><span class="fact-text">全国の民間図書館に並ぶ寄贈本</span><span class="fact-note">2025年度時点</span></li><li><span class="fact-value">毎月</span><span class="fact-text">貸出しのデータと選書で、棚を入れ替え</span></li><li><span class="fact-value">本棚さえ</span><span class="fact-text">置ければ、どこでも図書館に</span></li></ul>
+      <ul class="strength-facts"><li><span class="fact-value">約<span class="num">14</span>万冊</span><span class="fact-text">全国の民間図書館に並ぶ寄贈本</span><span class="fact-note">2025年度時点</span></li><li><span class="fact-value">毎月</span><span class="fact-text">貸出しのデータと選書で、棚を入れ替え</span></li><li><span class="fact-value">本棚さえ</span><span class="fact-text">置ければ、どこでも図書館に</span></li></ul>
       <p class="strength-link"><a class="text-link" href="https://www.infosta.org/library/kizo" target="_blank" rel="noopener">本の寄贈について<span class="nowrap">（公式サイト）</span><svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9 2.5h4.5V7M13.2 2.8 7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">（新しいタブで開きます）</span></a></p>
     </div>
   </div>
@@ -118,41 +124,38 @@
       <h2 id="activities-title">小さな図書館と、<wbr>地域の活動。</h2>
       <p class="lead">まちの中に本のある居場所をひらき、そこから生まれるつながりを生かして、地域の催しや活動も支えています。</p>
     </header>
-    
-    <article class="activity activity--with-media" id="activity-libraries">
-      
-      <div class="activity-text">
-        <p class="activity-name">民間図書館</p>
-        <h3>小さな民間図書館を<wbr>つくる</h3>
-        <p class="activity-description">寄贈された本と、地域の人の参加を通じて、読むことから交流へつながる身近な場を育てます。</p>
-        <ul class="detail-list"><li><span class="detail-title">さまざまな場所にひらく</span>マンションの共有部、福祉施設、商店街の空き店舗、商業施設など、さまざまな場所に図書館がひらかれてきました。</li><li><span class="detail-title">借りるだけではありません</span>本を借りるほか、イベントへの参加やスペースとしての利用など、いろいろな形で関われます。</li><li><span class="detail-title">続けやすい参加</span>生活や年齢が変わっても、気軽に参加を続けられるボランティアの環境を大切にしています。</li></ul>
-        <p class="activity-link"><a class="text-link" href="https://www.infosta.org/library" target="_blank" rel="noopener">民間図書館について<span class="nowrap">（公式サイト）</span><svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9 2.5h4.5V7M13.2 2.8 7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">（新しいタブで開きます）</span></a></p>
-      </div>
-      <div class="activity-media">
-<figure class="photo  ">
-  <img src="assets/img/funabashi-library.jpg" width="960" height="720" alt="ふなばし駅前図書館の受付と本棚" loading="lazy" decoding="async">
-  
-</figure>
-<figure class="photo photo--small ">
-  <img src="assets/img/library-readers.jpg" width="552" height="366" alt="本棚の前で本に触れる人たち" loading="lazy" decoding="async">
-  
-</figure></div>
-    </article>
-    <article class="activity activity--split" id="activity-community_support">
-      
-      <div class="activity-text">
-        <p class="activity-name">まちづくりサポート</p>
-        <h3>地域の活動を<wbr>支える</h3>
-        <p class="activity-description">地域のイベントや活動を、広報宣伝・組織運営・資金調達の面からサポートします。</p>
-        <ul class="detail-list"><li><span class="detail-title">催しを、多世代が出会う機会に</span>地域の催しやまちづくりの取り組みを、風土や歴史を活かした多世代交流の機会ととらえて支えています。</li></ul>
+    <div class="activity-grid">
+      <article class="activity-card activity-card--libraries" id="activity-libraries">
         
-      </div>
-      <div class="activity-aside">
-        <p class="supports-heading">3つの面から支えます</p><ul class="supports"><li><span class="supports-name">広報宣伝</span><span class="supports-text">活動や催しを、知ってもらうために。</span></li><li><span class="supports-name">組織運営</span><span class="supports-text">活動を続けていく体制のために。</span></li><li><span class="supports-name">資金調達</span><span class="supports-text">活動に必要なお金を集めるために。</span></li></ul>
-        <p class="activity-link"><a class="text-link" href="mailto:office@infosta.org?subject=%E3%80%90%E7%9B%B8%E8%AB%87%E3%80%91%E3%81%BE%E3%81%A1%E3%81%A5%E3%81%8F%E3%82%8A%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">まちづくりサポートについて相談する</a></p>
+        <div class="activity-photos">
+          <img class="activity-photo-main" src="assets/img/funabashi-library.jpg" width="960" height="720" alt="ふなばし駅前図書館の受付と本棚" loading="lazy" decoding="async">
+          <img class="activity-photo-sub" src="assets/img/library-readers.jpg" width="552" height="366" alt="本棚の前で本に触れる人たち" loading="lazy" decoding="async">
+        </div>
+        <div class="activity-body">
+          <p class="activity-name">民間図書館</p>
+          <h3>小さな民間図書館を<wbr>つくる</h3>
+          <p class="activity-description">寄贈された本と、地域の人の参加を通じて、読むことから交流へつながる身近な場を育てます。</p>
+          <ul class="detail-list"><li><span class="detail-title">さまざまな場所にひらく</span>マンションの共有部、福祉施設、商店街の空き店舗、商業施設など、さまざまな場所に図書館がひらかれてきました。</li><li><span class="detail-title">借りるだけではありません</span>本を借りるほか、イベントへの参加やスペースとしての利用など、いろいろな形で関われます。</li><li><span class="detail-title">続けやすい参加</span>生活や年齢が変わっても、気軽に参加を続けられるボランティアの環境を大切にしています。</li></ul>
+          <p class="activity-link"><a class="btn btn--secondary" href="https://www.infosta.org/library" target="_blank" rel="noopener">民間図書館について<span class="nowrap">（公式サイト）</span><svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9 2.5h4.5V7M13.2 2.8 7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">（新しいタブで開きます）</span></a></p>
+          
+        </div>
+      </article>
+      <article class="activity-card activity-card--community_support" id="activity-community_support">
+        
+        <div class="activity-supports">
+          <p class="supports-heading">3つの面から支えます</p>
+          <ul class="supports"><li><span class="supports-name">広報宣伝</span><span class="supports-text">活動や催しを、知ってもらうために。</span></li><li><span class="supports-name">組織運営</span><span class="supports-text">活動を続けていく体制のために。</span></li><li><span class="supports-name">資金調達</span><span class="supports-text">活動に必要なお金を集めるために。</span></li></ul>
+        </div>
+        <div class="activity-body">
+          <p class="activity-name">まちづくりサポート</p>
+          <h3>地域の活動を<wbr>支える</h3>
+          <p class="activity-description">地域のイベントや活動を、広報宣伝・組織運営・資金調達の面からサポートします。</p>
+          <ul class="detail-list"><li><span class="detail-title">催しを、多世代が出会う機会に</span>地域の催しやまちづくりの取り組みを、風土や歴史を活かした多世代交流の機会ととらえて支えています。</li></ul>
+          
+          <p class="activity-link"><a class="btn btn--secondary" href="mailto:office@infosta.org?subject=%E3%80%90%E7%9B%B8%E8%AB%87%E3%80%91%E3%81%BE%E3%81%A1%E3%81%A5%E3%81%8F%E3%82%8A%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">まちづくりサポートについて相談する</a></p>
            <p class="source-note">支援の内容や条件は、取り組みごとにご相談ください。</p>
-      </div>
-    </article>
+        </div>
+      </article></div>
   </div>
 </section>
 
@@ -207,157 +210,158 @@
       </div>
       <p class="results-desc" data-results-desc hidden></p>
       <p class="visually-hidden" aria-live="polite" data-results-live></p>
-      <ul class="people-list" data-people-list>
+      <ul class="people-list" id="people-list" data-people-list>
         <li class="person-item" id="person-m01" data-person-id="m01" data-domains="books community">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">岡※※</span><span class="visually-hidden">岡、名前の一部を伏せています（書店店主・地域団体代表・観光協会役員）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-4" aria-hidden="true">岡</span><span class="person-name-text"><span aria-hidden="true">岡※※</span><span class="visually-hidden">岡、名前の一部を伏せています（書店店主・地域団体代表・観光協会役員）</span></span></p>
           <p class="person-aff">書店店主・地域団体代表・観光協会役員</p>
           <ul class="chips" aria-label="分野"><li class="chip">本・読書・図書館</li><li class="chip">地域・行政・観光</li></ul>
           <button type="button" class="person-open" data-person-open="m01" hidden>詳しく見る<span class="visually-hidden">：岡、名前の一部を伏せています（書店店主・地域団体代表・観光協会役員）</span></button>
         </li>
         <li class="person-item" id="person-m02" data-person-id="m02" data-domains="books">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">鈴※※※</span><span class="visually-hidden">鈴、名前の一部を伏せています（読書アドバイザー）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-1" aria-hidden="true">鈴</span><span class="person-name-text"><span aria-hidden="true">鈴※※※</span><span class="visually-hidden">鈴、名前の一部を伏せています（読書アドバイザー）</span></span></p>
           <p class="person-aff">読書アドバイザー</p>
           <ul class="chips" aria-label="分野"><li class="chip">本・読書・図書館</li></ul>
           <button type="button" class="person-open" data-person-open="m02" hidden>詳しく見る<span class="visually-hidden">：鈴、名前の一部を伏せています（読書アドバイザー）</span></button>
         </li>
         <li class="person-item" id="person-m03" data-person-id="m03" data-domains="community">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">山※※※</span><span class="visually-hidden">山、名前の一部を伏せています（町会役員）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-2" aria-hidden="true">山</span><span class="person-name-text"><span aria-hidden="true">山※※※</span><span class="visually-hidden">山、名前の一部を伏せています（町会役員）</span></span></p>
           <p class="person-aff">町会役員</p>
           <ul class="chips" aria-label="分野"><li class="chip">地域・行政・観光</li></ul>
           <button type="button" class="person-open" data-person-open="m03" hidden>詳しく見る<span class="visually-hidden">：山、名前の一部を伏せています（町会役員）</span></button>
         </li>
         <li class="person-item" id="person-m04" data-person-id="m04" data-domains="space_tech">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">木※※※</span><span class="visually-hidden">木、名前の一部を伏せています（ITエンジニア）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-3" aria-hidden="true">木</span><span class="person-name-text"><span aria-hidden="true">木※※※</span><span class="visually-hidden">木、名前の一部を伏せています（ITエンジニア）</span></span></p>
           <p class="person-aff">ITエンジニア</p>
           <ul class="chips" aria-label="分野"><li class="chip">建築・IT</li></ul>
           <button type="button" class="person-open" data-person-open="m04" hidden>詳しく見る<span class="visually-hidden">：木、名前の一部を伏せています（ITエンジニア）</span></button>
         </li>
         <li class="person-item" id="person-m05" data-person-id="m05" data-domains="business">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">石※※※</span><span class="visually-hidden">石、名前の一部を伏せています（企業勤務）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-4" aria-hidden="true">石</span><span class="person-name-text"><span aria-hidden="true">石※※※</span><span class="visually-hidden">石、名前の一部を伏せています（企業勤務）</span></span></p>
           <p class="person-aff">企業勤務</p>
           <ul class="chips" aria-label="分野"><li class="chip">企業・事業づくり</li></ul>
           <button type="button" class="person-open" data-person-open="m05" hidden>詳しく見る<span class="visually-hidden">：石、名前の一部を伏せています（企業勤務）</span></button>
         </li>
         <li class="person-item" id="person-m06" data-person-id="m06" data-domains="books business">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">澤※※※</span><span class="visually-hidden">澤、名前の一部を伏せています（図書館関連企業の営業）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-1" aria-hidden="true">澤</span><span class="person-name-text"><span aria-hidden="true">澤※※※</span><span class="visually-hidden">澤、名前の一部を伏せています（図書館関連企業の営業）</span></span></p>
           <p class="person-aff">図書館関連企業の営業</p>
           <ul class="chips" aria-label="分野"><li class="chip">本・読書・図書館</li><li class="chip">企業・事業づくり</li></ul>
           <button type="button" class="person-open" data-person-open="m06" hidden>詳しく見る<span class="visually-hidden">：澤、名前の一部を伏せています（図書館関連企業の営業）</span></button>
         </li>
         <li class="person-item" id="person-m07" data-person-id="m07" data-domains="culture">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">岩※※※</span><span class="visually-hidden">岩、名前の一部を伏せています（和太鼓・似顔絵師）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-2" aria-hidden="true">岩</span><span class="person-name-text"><span aria-hidden="true">岩※※※</span><span class="visually-hidden">岩、名前の一部を伏せています（和太鼓・似顔絵師）</span></span></p>
           <p class="person-aff">和太鼓・似顔絵師</p>
           <ul class="chips" aria-label="分野"><li class="chip">文化・表現・発信</li></ul>
           <button type="button" class="person-open" data-person-open="m07" hidden>詳しく見る<span class="visually-hidden">：岩、名前の一部を伏せています（和太鼓・似顔絵師）</span></button>
         </li>
         <li class="person-item" id="person-m08" data-person-id="m08" data-domains="law">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">中※※</span><span class="visually-hidden">中、名前の一部を伏せています（弁護士）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-3" aria-hidden="true">中</span><span class="person-name-text"><span aria-hidden="true">中※※</span><span class="visually-hidden">中、名前の一部を伏せています（弁護士）</span></span></p>
           <p class="person-aff">弁護士</p>
           <ul class="chips" aria-label="分野"><li class="chip">法務</li></ul>
           <button type="button" class="person-open" data-person-open="m08" hidden>詳しく見る<span class="visually-hidden">：中、名前の一部を伏せています（弁護士）</span></button>
         </li>
         <li class="person-item" id="person-m09" data-person-id="m09" data-domains="education">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">野※※※</span><span class="visually-hidden">野、名前の一部を伏せています（大学教授）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-4" aria-hidden="true">野</span><span class="person-name-text"><span aria-hidden="true">野※※※</span><span class="visually-hidden">野、名前の一部を伏せています（大学教授）</span></span></p>
           <p class="person-aff">大学教授</p>
           <ul class="chips" aria-label="分野"><li class="chip">教育・保育・学び</li></ul>
           <button type="button" class="person-open" data-person-open="m09" hidden>詳しく見る<span class="visually-hidden">：野、名前の一部を伏せています（大学教授）</span></button>
         </li>
         <li class="person-item" id="person-m10" data-person-id="m10" data-domains="care">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">橋※※※</span><span class="visually-hidden">橋、名前の一部を伏せています（訪問美容師）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-2" aria-hidden="true">橋</span><span class="person-name-text"><span aria-hidden="true">橋※※※</span><span class="visually-hidden">橋、名前の一部を伏せています（訪問美容師）</span></span></p>
           <p class="person-aff">訪問美容師</p>
           <ul class="chips" aria-label="分野"><li class="chip">医療・福祉・暮らし</li></ul>
           <button type="button" class="person-open" data-person-open="m10" hidden>詳しく見る<span class="visually-hidden">：橋、名前の一部を伏せています（訪問美容師）</span></button>
         </li>
         <li class="person-item" id="person-m11" data-person-id="m11" data-domains="community">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">山※※※</span><span class="visually-hidden">山、名前の一部を伏せています（市役所勤務）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-3" aria-hidden="true">山</span><span class="person-name-text"><span aria-hidden="true">山※※※</span><span class="visually-hidden">山、名前の一部を伏せています（市役所勤務）</span></span></p>
           <p class="person-aff">市役所勤務</p>
           <ul class="chips" aria-label="分野"><li class="chip">地域・行政・観光</li></ul>
           <button type="button" class="person-open" data-person-open="m11" hidden>詳しく見る<span class="visually-hidden">：山、名前の一部を伏せています（市役所勤務）</span></button>
         </li>
         <li class="person-item" id="person-m12" data-person-id="m12" data-domains="business">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">古※※※※</span><span class="visually-hidden">古、名前の一部を伏せています（生命保険会社勤務）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-4" aria-hidden="true">古</span><span class="person-name-text"><span aria-hidden="true">古※※※※</span><span class="visually-hidden">古、名前の一部を伏せています（生命保険会社勤務）</span></span></p>
           <p class="person-aff">生命保険会社勤務</p>
           <ul class="chips" aria-label="分野"><li class="chip">企業・事業づくり</li></ul>
           <button type="button" class="person-open" data-person-open="m12" hidden>詳しく見る<span class="visually-hidden">：古、名前の一部を伏せています（生命保険会社勤務）</span></button>
         </li>
         <li class="person-item" id="person-m13" data-person-id="m13" data-domains="business culture">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">吉※※※</span><span class="visually-hidden">吉、名前の一部を伏せています（会社代表・コンセプター）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-1" aria-hidden="true">吉</span><span class="person-name-text"><span aria-hidden="true">吉※※※</span><span class="visually-hidden">吉、名前の一部を伏せています（会社代表・コンセプター）</span></span></p>
           <p class="person-aff">会社代表・コンセプター</p>
           <ul class="chips" aria-label="分野"><li class="chip">企業・事業づくり</li><li class="chip">文化・表現・発信</li></ul>
           <button type="button" class="person-open" data-person-open="m13" hidden>詳しく見る<span class="visually-hidden">：吉、名前の一部を伏せています（会社代表・コンセプター）</span></button>
         </li>
         <li class="person-item" id="person-m14" data-person-id="m14" data-domains="business culture">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">古※※※</span><span class="visually-hidden">古、名前の一部を伏せています（企業のコミュニケーション責任者）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-2" aria-hidden="true">古</span><span class="person-name-text"><span aria-hidden="true">古※※※</span><span class="visually-hidden">古、名前の一部を伏せています（企業のコミュニケーション責任者）</span></span></p>
           <p class="person-aff">企業のコミュニケーション責任者</p>
           <ul class="chips" aria-label="分野"><li class="chip">企業・事業づくり</li><li class="chip">文化・表現・発信</li></ul>
           <button type="button" class="person-open" data-person-open="m14" hidden>詳しく見る<span class="visually-hidden">：古、名前の一部を伏せています（企業のコミュニケーション責任者）</span></button>
         </li>
         <li class="person-item" id="person-m15" data-person-id="m15" data-domains="education">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">恒※※※</span><span class="visually-hidden">恒、名前の一部を伏せています（保育園園長）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-3" aria-hidden="true">恒</span><span class="person-name-text"><span aria-hidden="true">恒※※※</span><span class="visually-hidden">恒、名前の一部を伏せています（保育園園長）</span></span></p>
           <p class="person-aff">保育園園長</p>
           <ul class="chips" aria-label="分野"><li class="chip">教育・保育・学び</li></ul>
           <button type="button" class="person-open" data-person-open="m15" hidden>詳しく見る<span class="visually-hidden">：恒、名前の一部を伏せています（保育園園長）</span></button>
         </li>
         <li class="person-item" id="person-m16" data-person-id="m16" data-domains="education">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">福※※</span><span class="visually-hidden">福、名前の一部を伏せています（学校法人理事長）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-4" aria-hidden="true">福</span><span class="person-name-text"><span aria-hidden="true">福※※</span><span class="visually-hidden">福、名前の一部を伏せています（学校法人理事長）</span></span></p>
           <p class="person-aff">学校法人理事長</p>
           <ul class="chips" aria-label="分野"><li class="chip">教育・保育・学び</li></ul>
           <button type="button" class="person-open" data-person-open="m16" hidden>詳しく見る<span class="visually-hidden">：福、名前の一部を伏せています（学校法人理事長）</span></button>
         </li>
         <li class="person-item" id="person-m17" data-person-id="m17" data-domains="business space_tech">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">藤※※※</span><span class="visually-hidden">藤、名前の一部を伏せています（建設会社の新規事業代表）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-1" aria-hidden="true">藤</span><span class="person-name-text"><span aria-hidden="true">藤※※※</span><span class="visually-hidden">藤、名前の一部を伏せています（建設会社の新規事業代表）</span></span></p>
           <p class="person-aff">建設会社の新規事業代表</p>
           <ul class="chips" aria-label="分野"><li class="chip">企業・事業づくり</li><li class="chip">建築・IT</li></ul>
           <button type="button" class="person-open" data-person-open="m17" hidden>詳しく見る<span class="visually-hidden">：藤、名前の一部を伏せています（建設会社の新規事業代表）</span></button>
         </li>
         <li class="person-item" id="person-m18" data-person-id="m18" data-domains="care">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">工※※※※</span><span class="visually-hidden">工、名前の一部を伏せています（看護師・会社代表）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-2" aria-hidden="true">工</span><span class="person-name-text"><span aria-hidden="true">工※※※※</span><span class="visually-hidden">工、名前の一部を伏せています（看護師・会社代表）</span></span></p>
           <p class="person-aff">看護師・会社代表</p>
           <ul class="chips" aria-label="分野"><li class="chip">医療・福祉・暮らし</li></ul>
           <button type="button" class="person-open" data-person-open="m18" hidden>詳しく見る<span class="visually-hidden">：工、名前の一部を伏せています（看護師・会社代表）</span></button>
         </li>
         <li class="person-item" id="person-m19" data-person-id="m19" data-domains="culture">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">柴※※※</span><span class="visually-hidden">柴、名前の一部を伏せています（作曲家）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-3" aria-hidden="true">柴</span><span class="person-name-text"><span aria-hidden="true">柴※※※</span><span class="visually-hidden">柴、名前の一部を伏せています（作曲家）</span></span></p>
           <p class="person-aff">作曲家</p>
           <ul class="chips" aria-label="分野"><li class="chip">文化・表現・発信</li></ul>
           <button type="button" class="person-open" data-person-open="m19" hidden>詳しく見る<span class="visually-hidden">：柴、名前の一部を伏せています（作曲家）</span></button>
         </li>
         <li class="person-item" id="person-m20" data-person-id="m20" data-domains="business">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">工※※※</span><span class="visually-hidden">工、名前の一部を伏せています（小売企業のソーシャルグッド事業部）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-1" aria-hidden="true">工</span><span class="person-name-text"><span aria-hidden="true">工※※※</span><span class="visually-hidden">工、名前の一部を伏せています（小売企業のソーシャルグッド事業部）</span></span></p>
           <p class="person-aff">小売企業のソーシャルグッド事業部</p>
           <ul class="chips" aria-label="分野"><li class="chip">企業・事業づくり</li></ul>
           <button type="button" class="person-open" data-person-open="m20" hidden>詳しく見る<span class="visually-hidden">：工、名前の一部を伏せています（小売企業のソーシャルグッド事業部）</span></button>
         </li>
         <li class="person-item" id="person-m21" data-person-id="m21" data-domains="education care">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">橋※※※</span><span class="visually-hidden">橋、名前の一部を伏せています（保育士・精神保健福祉士）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-2" aria-hidden="true">橋</span><span class="person-name-text"><span aria-hidden="true">橋※※※</span><span class="visually-hidden">橋、名前の一部を伏せています（保育士・精神保健福祉士）</span></span></p>
           <p class="person-aff">保育士・精神保健福祉士</p>
           <ul class="chips" aria-label="分野"><li class="chip">教育・保育・学び</li><li class="chip">医療・福祉・暮らし</li></ul>
           <button type="button" class="person-open" data-person-open="m21" hidden>詳しく見る<span class="visually-hidden">：橋、名前の一部を伏せています（保育士・精神保健福祉士）</span></button>
         </li>
         <li class="person-item" id="person-m22" data-person-id="m22" data-domains="business">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">岡※※</span><span class="visually-hidden">岡、名前の一部を伏せています（会社代表）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-3" aria-hidden="true">岡</span><span class="person-name-text"><span aria-hidden="true">岡※※</span><span class="visually-hidden">岡、名前の一部を伏せています（会社代表）</span></span></p>
           <p class="person-aff">会社代表</p>
           <ul class="chips" aria-label="分野"><li class="chip">企業・事業づくり</li></ul>
           <button type="button" class="person-open" data-person-open="m22" hidden>詳しく見る<span class="visually-hidden">：岡、名前の一部を伏せています（会社代表）</span></button>
         </li>
         <li class="person-item" id="person-m23" data-person-id="m23" data-domains="education business">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">山※※</span><span class="visually-hidden">山、名前の一部を伏せています（高専生・会社代表）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-4" aria-hidden="true">山</span><span class="person-name-text"><span aria-hidden="true">山※※</span><span class="visually-hidden">山、名前の一部を伏せています（高専生・会社代表）</span></span></p>
           <p class="person-aff">高専生・会社代表</p>
           <ul class="chips" aria-label="分野"><li class="chip">教育・保育・学び</li><li class="chip">企業・事業づくり</li></ul>
           <button type="button" class="person-open" data-person-open="m23" hidden>詳しく見る<span class="visually-hidden">：山、名前の一部を伏せています（高専生・会社代表）</span></button>
         </li>
         <li class="person-item" id="person-m24" data-person-id="m24" data-domains="business">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">竹※※※</span><span class="visually-hidden">竹、名前の一部を伏せています（印刷会社取締役）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-1" aria-hidden="true">竹</span><span class="person-name-text"><span aria-hidden="true">竹※※※</span><span class="visually-hidden">竹、名前の一部を伏せています（印刷会社取締役）</span></span></p>
           <p class="person-aff">印刷会社取締役</p>
           <ul class="chips" aria-label="分野"><li class="chip">企業・事業づくり</li></ul>
           <button type="button" class="person-open" data-person-open="m24" hidden>詳しく見る<span class="visually-hidden">：竹、名前の一部を伏せています（印刷会社取締役）</span></button>
         </li>
         <li class="person-item" id="person-m25" data-person-id="m25" data-domains="books culture">
-          <p class="person-name"><span class="person-name-text"><span aria-hidden="true">豊※※※※</span><span class="visually-hidden">豊、名前の一部を伏せています（認定司書・ラジオパーソナリティ）</span></span></p>
+          <p class="person-name"><span class="avatar avatar-tone-2" aria-hidden="true">豊</span><span class="person-name-text"><span aria-hidden="true">豊※※※※</span><span class="visually-hidden">豊、名前の一部を伏せています（認定司書・ラジオパーソナリティ）</span></span></p>
           <p class="person-aff">認定司書・ラジオパーソナリティ</p>
           <ul class="chips" aria-label="分野"><li class="chip">本・読書・図書館</li><li class="chip">文化・表現・発信</li></ul>
           <button type="button" class="person-open" data-person-open="m25" hidden>詳しく見る<span class="visually-hidden">：豊、名前の一部を伏せています（認定司書・ラジオパーソナリティ）</span></button>
         </li></ul>
+      <p class="people-more"><button type="button" class="btn btn--secondary" data-people-more aria-controls="people-list" aria-expanded="false" hidden>すべての理事を表示する（25人）</button></p>
     </div>
     
     <aside class="board-entry" aria-labelledby="board-entry-title">
@@ -385,48 +389,62 @@
 
 <section class="section" id="join" aria-labelledby="join-title">
   <div class="container">
-    <header class="section-head">
-      <h2 id="join-title">関わり方</h2>
-      <p class="lead">読む人、本を届ける人、時間や得意なことを持ち寄る人、場所を生かしたい人。いっしょにできることは、ひとつではありません。</p>
-    </header>
-    <div class="join-layout">
-      
-<figure class="photo  join-photo">
-  <img src="assets/img/library-people.jpg" width="552" height="367" alt="本を手に本棚の前に集まる人たち" loading="lazy" decoding="async">
-  
-</figure>
-      <ul class="join-list">
+    <div class="join-head">
+      <header class="section-head">
+        <h2 id="join-title">関わり方</h2>
+        <p class="lead">読む人、本を届ける人、時間や得意なことを持ち寄る人、場所を生かしたい人。いっしょにできることは、ひとつではありません。</p>
+      </header>
+      <figure class="join-photo"><img src="assets/img/library-people.jpg" width="552" height="367" alt="本を手に本棚の前に集まる人たち" loading="lazy" decoding="async"></figure>
+    </div>
+    <ul class="join-list">
       <li class="join-item" id="join-visit">
-        <h3>読んで、訪ねて、関わる</h3>
-        <p>民間図書館に立ち寄ったり、本を借りたりするところから始められます。</p>
+        <span class="join-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M3 6.4c3-1.4 6-1.3 9 .6 3-1.9 6-2 9-.6v12.2c-3-1.4-6-1.3-9 .6-3-1.9-6-2-9-.6zM12 7v12.2"/></svg></span>
+        <div class="join-body">
+          <h3>読んで、訪ねて、関わる</h3>
+          <p>民間図書館に立ち寄ったり、本を借りたりするところから始められます。</p>
+        </div>
         <p class="action"><a class="text-link" href="https://www.infosta.org/library" target="_blank" rel="noopener">民間図書館の紹介を見る<span class="nowrap">（公式サイト）</span><svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9 2.5h4.5V7M13.2 2.8 7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">（新しいタブで開きます）</span></a></p>
       </li>
       <li class="join-item" id="join-books">
-        <h3>読み終えた本を<wbr>役立てる</h3>
-        <p>図書館の本は、寄贈された本で成り立っています。寄贈の方法は、公式サイトの案内をご確認ください。</p>
+        <span class="join-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M3.5 20.5h17M5 20.5V7.5h3.6v13M9.8 20.5V4.8h3.6v15.7M15 8.9l3.5-.9 2.9 11.7-3.5.9z"/></svg></span>
+        <div class="join-body">
+          <h3>読み終えた本を<wbr>役立てる</h3>
+          <p>図書館の本は、寄贈された本で成り立っています。寄贈の方法は、公式サイトの案内をご確認ください。</p>
+        </div>
         <p class="action"><a class="text-link" href="https://www.infosta.org/library/kizo" target="_blank" rel="noopener">本の寄贈の案内を見る<span class="nowrap">（公式サイト）</span><svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9 2.5h4.5V7M13.2 2.8 7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">（新しいタブで開きます）</span></a></p>
       </li>
       <li class="join-item" id="join-volunteer">
-        <h3>時間や得意なことを<wbr>持ち寄る</h3>
-        <p>選書や棚づくりなど、図書館の運営にはボランティアが関わってきました。参加の方法は、相談窓口へお問い合わせください。</p>
+        <span class="join-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 20s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7.5 4.2 4.2 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></svg></span>
+        <div class="join-body">
+          <h3>時間や得意なことを<wbr>持ち寄る</h3>
+          <p>選書や棚づくりなど、図書館の運営にはボランティアが関わってきました。参加の方法は、相談窓口へお問い合わせください。</p>
+        </div>
         <p class="action"><a class="text-link" href="mailto:office@infosta.org?subject=%E3%80%90%E7%9B%B8%E8%AB%87%E3%80%91%E3%83%9C%E3%83%A9%E3%83%B3%E3%83%86%E3%82%A3%E3%82%A2%E3%83%BB%E6%89%8B%E4%BC%9D%E3%81%84%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">メールで相談する</a></p>
       </li>
       <li class="join-item" id="join-space">
-        <h3>場所や企画を<wbr>相談する</h3>
-        <p>空きスペースや施設を、本のある交流の場にしたいとき。地域の催しを一緒に考えたいときに。</p>
+        <span class="join-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M3.5 20h17M5 20V9.5L12 5l7 4.5V20M9.5 20v-6h5v6"/></svg></span>
+        <div class="join-body">
+          <h3>場所や企画を<wbr>相談する</h3>
+          <p>空きスペースや施設を、本のある交流の場にしたいとき。地域の催しを一緒に考えたいときに。</p>
+        </div>
         <p class="action"><a class="text-link" href="mailto:office@infosta.org?subject=%E3%80%90%E7%9B%B8%E8%AB%87%E3%80%91%E5%A0%B4%E6%89%80%E3%83%BB%E4%BC%81%E7%94%BB%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">メールで相談する</a></p>
       </li>
       <li class="join-item" id="join-support">
-        <h3>会員や寄付で<wbr>支える</h3>
-        <p>活動を続けていくために、会員や寄付で支える方法があります。条件は、公式サイトの案内をご確認ください。</p>
+        <span class="join-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 21v-7.5M12 13.5C12 9.6 9.1 7 5 7c0 4 2.9 6.5 7 6.5zM12 11.5c0-3.4 2.5-6 6.5-6 0 3.6-2.6 6-6.5 6"/></svg></span>
+        <div class="join-body">
+          <h3>会員や寄付で<wbr>支える</h3>
+          <p>活動を続けていくために、会員や寄付で支える方法があります。条件は、公式サイトの案内をご確認ください。</p>
+        </div>
         <p class="action"><a class="text-link" href="https://www.infosta.org/kifu" target="_blank" rel="noopener">寄付・会員募集の案内を見る<span class="nowrap">（公式サイト）</span><svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9 2.5h4.5V7M13.2 2.8 7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">（新しいタブで開きます）</span></a></p>
       </li>
       <li class="join-item join-item--open" id="join-open">
-        <h3>まだ決まっていないことも<wbr>相談する</h3>
-        <p>やりたいことが固まっていなくても、これまでにないアイデアでも構いません。まずは話してみてください。</p>
-        <p class="action"><a class="text-link" href="mailto:office@infosta.org?subject=%E3%80%90%E7%9B%B8%E8%AB%87%E3%80%91%E3%81%BE%E3%81%A0%E6%B1%BA%E3%81%BE%E3%81%A3%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%E3%81%93%E3%81%A8">メールで相談する</a></p>
+        <span class="join-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4.5 6.5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2V15a2 2 0 0 1-2 2H11l-4.5 3.5V17h0a2 2 0 0 1-2-2zM9 10.8h.01M12 10.8h.01M15 10.8h.01"/></svg></span>
+        <div class="join-body">
+          <h3>まだ決まっていないことも<wbr>相談する</h3>
+          <p>やりたいことが固まっていなくても、これまでにないアイデアでも構いません。まずは話してみてください。</p>
+        </div>
+        <p class="action"><a class="btn btn--primary" href="mailto:office@infosta.org?subject=%E3%80%90%E7%9B%B8%E8%AB%87%E3%80%91%E3%81%BE%E3%81%A0%E6%B1%BA%E3%81%BE%E3%81%A3%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%E3%81%93%E3%81%A8">メールで相談する</a></p>
       </li></ul>
-    </div>
   </div>
 </section>
 
@@ -471,12 +489,18 @@
     </header>
     <div class="mv">
       <div class="mv-block mv-block--mission">
-        <h3 class="mv-label">ミッション</h3>
+        <div class="mv-top">
+          <h3 class="mv-label">ミッション</h3>
+          <svg class="mv-motif" viewBox="0 0 168 40" aria-hidden="true" focusable="false"><circle class="motif-dot" cx="9" cy="20" r="5"/><path class="motif-line" d="M44 20h48"/><circle class="motif-dot" cx="44" cy="20" r="5"/><circle class="motif-dot" cx="92" cy="20" r="5"/><circle class="motif-ring" cx="144" cy="20" r="15"/><circle class="motif-dot" cx="144" cy="5" r="3.2"/><circle class="motif-dot" cx="158.3" cy="15.4" r="3.2"/><circle class="motif-dot" cx="152.8" cy="32.1" r="3.2"/><circle class="motif-dot" cx="135.2" cy="32.1" r="3.2"/><circle class="motif-dot" cx="129.7" cy="15.4" r="3.2"/></svg>
+        </div>
         <p class="mv-statement">本をきっかけに、人と人の縁を、<wbr>点から線へ、線から輪へ。</p>
         <p class="mv-text">まちの中に小さな図書館をひらき、子どもからお年寄りまでが立ち寄り、出会い、語り合える場をつくります。</p>
       </div>
       <div class="mv-block mv-block--vision">
-        <h3 class="mv-label">ビジョン</h3>
+        <div class="mv-top">
+          <h3 class="mv-label">ビジョン</h3>
+          
+        </div>
         <p class="mv-statement">多世代交流が、<wbr>自然と生まれるまちへ。</p>
         <p class="mv-text">自分の暮らす街に、誇りや愛着を持てること。世代をこえて人が出会い、それぞれが関われること。そんな日常につながる場づくりを目指します。</p>
       </div></div>
@@ -487,7 +511,7 @@
 
 <footer class="site-footer">
   <div class="container footer-grid">
-    <div>
+    <div class="footer-about">
       <p class="footer-logo"><img src="assets/img/infosta-logo.gif" width="250" height="60" alt="情報ステーション" loading="lazy"></p>
       <dl class="footer-org">
         <dt>団体名</dt><dd>NPO法人 情報ステーション</dd>
@@ -496,13 +520,15 @@
         <dt>代表理事</dt><dd>岡 直樹</dd>
       </dl>
     </div>
-    <div>
+    <div class="footer-nav">
       <ul class="footer-links"><li><a href="https://www.infosta.org/" target="_blank" rel="noopener">公式サイト<svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9 2.5h4.5V7M13.2 2.8 7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">（新しいタブで開きます）</span></a></li><li><a href="https://www.infosta.org/about" target="_blank" rel="noopener">情報ステーションとは<svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9 2.5h4.5V7M13.2 2.8 7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">（新しいタブで開きます）</span></a></li><li><a href="https://www.infosta.org/about/ir" target="_blank" rel="noopener">事業報告・財務資料<svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9 2.5h4.5V7M13.2 2.8 7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">（新しいタブで開きます）</span></a></li><li><a href="https://www.infosta.org/kifu" target="_blank" rel="noopener">寄付・会員募集<svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9 2.5h4.5V7M13.2 2.8 7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">（新しいタブで開きます）</span></a></li><li><a href="https://www.infosta.org/library/kizo" target="_blank" rel="noopener">本の寄贈<svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9 2.5h4.5V7M13.2 2.8 7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">（新しいタブで開きます）</span></a></li></ul>
       <p class="footer-board"><a href="board/">理事のページ</a></p>
-      <p class="footer-note">公開前の確認用ページです。</p>
     </div>
   </div>
+  <div class="container"><p class="footer-note">公開前の確認用ページです。</p></div>
 </footer>
+
+<nav class="mobile-cta" aria-label="すぐに使う案内" data-mobile-cta hidden><a class="btn btn--primary" href="#contact">相談する</a><a class="btn btn--secondary" href="#join">関わり方を見る</a></nav>
 
 <aside class="review-panel" id="review-panel" aria-labelledby="review-title" hidden tabindex="-1">
   <div class="review-top">
@@ -513,7 +539,7 @@
   <div class="tune" data-tune>
     <div class="tune-row"><label for="tune-bg">背景の色</label><input id="tune-bg" type="color" data-var="--color-bg"></div>
     <div class="tune-row"><label for="tune-accent">印・選択の色</label><input id="tune-accent" type="color" data-var="--color-accent"></div>
-    <div class="tune-row"><label for="tune-button">ボタン・リンクの色</label><input id="tune-button" type="color" data-var="--color-button"></div>
+    <div class="tune-row"><label for="tune-button">ボタンの色</label><input id="tune-button" type="color" data-var="--color-button"></div>
     <div class="tune-row"><label for="tune-strength">強みの区画の色</label><input id="tune-strength" type="color" data-var="--color-strength"></div>
     <p class="tune-contrast" data-contrast></p>
     <div class="tune-row"><label for="tune-size">本文の文字サイズ</label><output for="tune-size" data-out="tune-size"></output><input id="tune-size" type="range" min="16" max="20" step="0.5" data-var="--font-size-body" data-unit="px"></div>
@@ -528,8 +554,8 @@
   </div>
   <p class="tune-status" data-tune-status role="status"></p>
 </aside>
-<script src="assets/js/site.js?v=c59ebe19" defer></script>
-<script src="assets/js/map.js?v=c59ebe19" defer></script>
-<!-- built 2026-10-21T03:22:01.379Z / mode: preview -->
+<script src="assets/js/site.js?v=48048726" defer></script>
+<script src="assets/js/map.js?v=48048726" defer></script>
+<!-- built 2026-10-21T04:36:19.252Z / mode: preview -->
 </body>
 </html>
