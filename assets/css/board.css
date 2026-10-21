@@ -22,10 +22,16 @@
   white-space: nowrap;
 }
 .board-logout { flex: none; }
+.board-header .logo { display: flex; flex: none; align-items: center; min-height: 44px; }
 @media (max-width: 480px) {
-  .board-header .logo img { width: 128px; }
+  .board-header .header-inner { gap: 12px; }
+  .board-header .logo img { width: 120px; }
   .board-name { padding-left: 10px; font-size: 15px; }
   .board-logout { padding-inline: 12px; }
+}
+@media (max-width: 359px) {
+  .board-name { display: none; }
+  .board-header .header-inner { justify-content: space-between; }
 }
 
 /* ログイン */
