@@ -188,6 +188,27 @@
 .strategy-how dt { font-size: 15px; font-weight: 700; }
 .strategy-how dd { margin: 0; font-size: 15px; line-height: 1.75; }
 
+/* ───── ホーム：伝えるときの材料 ───── */
+.kit {
+  display: grid;
+  gap: 22px;
+  margin-top: 18px;
+  padding: clamp(22px, 3vw, 36px);
+  border-radius: var(--radius-large);
+  background: var(--color-surface);
+}
+@media (min-width: 960px) { .kit { grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); align-items: start; gap: 40px; } }
+.kit-intro h2 { font-size: 22px; font-weight: 900; }
+.kit-intro p { margin-top: 8px; color: var(--color-muted); font-size: 15px; line-height: 1.8; }
+.kit-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.kit-item { padding: 12px 16px 14px; border-radius: 16px; background: var(--color-mist); }
+.kit-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.kit-label { color: var(--color-muted); font-size: 14px; font-weight: 700; }
+.kit-text { margin-top: 4px; font-size: 15px; line-height: 1.75; overflow-wrap: anywhere; }
+.kit-note { margin-top: 4px; color: var(--color-muted); font-size: 14px; line-height: 1.6; }
+.kit-status { margin-top: 4px; color: var(--color-muted); font-size: 14px; }
+.kit-status:empty { display: none; }
+
 /* ───── ホーム：入口 ───── */
 .home-grid { display: grid; gap: 18px; margin-top: 18px; }
 @media (min-width: 900px) { .home-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }

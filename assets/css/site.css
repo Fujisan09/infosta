@@ -681,6 +681,93 @@ p { margin: 0; text-wrap: pretty; }
   .activity-card--libraries .activity-body { justify-content: center; padding: 48px clamp(32px, 4vw, 56px); }
 }
 
+/* 図書館は、まちの土台（OS）：下の濃い帯が土台、上のアイコンがその上で動く活動 */
+.os {
+  display: grid;
+  gap: 28px;
+  margin-bottom: clamp(28px, 4vw, 44px);
+  padding: clamp(24px, 4vw, 44px);
+  border-radius: var(--radius-large);
+  background: var(--color-mist);
+}
+@media (min-width: 960px) {
+  .os { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: center; gap: 48px; }
+}
+.os-text h3 { font-size: calc(clamp(22px, 1.2vw + 18px, 32px) * var(--heading-scale)); font-weight: 900; line-height: 1.35; }
+.os-text p { margin-top: 14px; color: var(--color-muted); }
+.os-stack { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.os-layer { color: var(--color-muted); font-size: 14px; font-weight: 700; letter-spacing: .04em; }
+.os-apps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(98px, 1fr));
+  gap: 10px;
+  margin: 0 0 6px;
+  padding: 0;
+  list-style: none;
+}
+.os-app { position: relative; display: flex; }
+/* 各アイコンから土台へ、短い線を下ろす（土台の上で動いていることを示す） */
+.os-app::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -16px;
+  width: 2px;
+  height: 16px;
+  background: var(--color-accent);
+  transform: translateX(-50%);
+}
+.os-app-inner {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 6px 12px;
+  border: 2px solid transparent;
+  border-radius: 18px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-align: center;
+  text-decoration: none;
+}
+.os-app-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; background: var(--color-tint); }
+.os-app-icon svg { width: 28px; height: 28px; fill: none; stroke: #C25A08; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.os-app-label {
+  font-family: var(--font-family-display);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  font-feature-settings: "palt";
+}
+.os-app--open .os-app-inner { border: 2px dashed #A99C90; background: transparent; }
+.os-app--open .os-app-icon { background: var(--color-surface); }
+.os-app--open .os-app-label { text-decoration: underline; text-decoration-color: var(--color-accent); text-decoration-thickness: 2px; text-underline-offset: .28em; }
+.os-base { position: relative; padding: 18px 22px 20px; border-radius: 18px; background: var(--color-text); color: #FFFFFF; }
+.os-layer--base { color: var(--color-strength-accent); }
+.os-base-title { margin-top: 2px; font-family: var(--font-family-display); font-size: calc(var(--font-size-h3) * 1.05); font-weight: 900; line-height: 1.4; word-break: keep-all; overflow-wrap: anywhere; }
+@media (max-width: 479px) {
+  /* スマホ：アイコンは2列。線は、アイコンのまとまりから土台へ1本だけ */
+  .os-apps { grid-template-columns: 1fr 1fr; }
+  .os-app::after { display: none; }
+  .os-app--open { grid-column: 1 / -1; }
+  .os-app--open .os-app-inner { flex-direction: row; justify-content: center; gap: 12px; padding-block: 10px; }
+  .os-app--open .os-app-icon { width: 44px; height: 44px; }
+  .os-base::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -16px;
+    width: 2px;
+    height: 16px;
+    background: var(--color-accent);
+    transform: translateX(-50%);
+  }
+}
+.os-base-text { margin-top: 4px; color: rgba(255, 255, 255, .86); font-size: var(--font-size-small); line-height: 1.6; }
+
 /* 写真（ほかの区画で使う共通の枠） */
 .photo { margin: 0; overflow: hidden; border-radius: var(--radius); }
 .photo img { width: 100%; }
@@ -1315,6 +1402,7 @@ p { margin: 0; text-wrap: pretty; }
   .pd-close:hover { border-color: var(--color-text); }
   .pd-domain:hover { background: var(--color-tint); }
   .footer-board a:hover { background: var(--color-tint); }
+  .os-app--open .os-app-inner:hover { border-color: var(--color-text); }
 }
 
 @media (max-width: 419px) {

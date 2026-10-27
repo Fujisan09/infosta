@@ -421,6 +421,55 @@
     ]);
   }
 
+  /* ───── 伝えるときの材料（理事それぞれが、自分の言葉を足して伝えるために） ───── */
+  function fallbackCopy(text) {
+    var area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.position = 'fixed';
+    area.style.top = '-1000px';
+    document.body.appendChild(area);
+    area.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(area);
+    return ok;
+  }
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(function () { return true; }, function () { return fallbackCopy(text); });
+    }
+    return Promise.resolve(fallbackCopy(text));
+  }
+  function shareKitNode() {
+    var k = data.shareKit;
+    if (!k || !(k.items || []).length) return null;
+    var list = el('ul', { class: 'kit-list' }, k.items.map(function (item, i) {
+      var statusId = 'kit-status-' + i;
+      var status = el('p', { class: 'kit-status', id: statusId, role: 'status' });
+      var button = el('button', {
+        type: 'button',
+        class: 'copy-btn',
+        'aria-label': item.label + 'を' + (k.copy || 'コピー'),
+        'aria-describedby': statusId,
+        text: k.copy || 'コピー',
+        onclick: function () {
+          copyText(item.text).then(function (ok) { status.textContent = ok ? k.copied : k.copyFailed; });
+        }
+      });
+      return el('li', { class: 'kit-item' }, [
+        el('div', { class: 'kit-head' }, [el('p', { class: 'kit-label', text: item.label }), button]),
+        el('p', { class: 'kit-text', text: item.text }),
+        item.note ? el('p', { class: 'kit-note', text: item.note }) : null,
+        status
+      ]);
+    }));
+    return el('section', { class: 'kit', 'aria-labelledby': 'kit-title' }, [
+      el('div', { class: 'kit-intro' }, [el('h2', { id: 'kit-title', text: k.title }), el('p', { text: k.lead })]),
+      list
+    ]);
+  }
+
   function zoneCounts() {
     var counts = {};
     news.forEach(function (n) { counts[n.zone] = (counts[n.zone] || 0) + 1; });
@@ -436,6 +485,8 @@
     ]));
     var growth = growthNode();
     if (growth) p.appendChild(growth);
+    var kit = shareKitNode();
+    if (kit) p.appendChild(kit);
 
     var counts = zoneCounts();
     var tiles = el('ul', { class: 'zone-tiles' }, zones.map(function (z) {
