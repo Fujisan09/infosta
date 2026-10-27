@@ -597,13 +597,13 @@ p { margin: 0; text-wrap: pretty; }
 @media (min-width: 900px) {
   .strength-slide {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-areas: "msg lead" "flow flow" "facts facts" "link link";
+    grid-template-areas: "msg copy" "flow flow" "places places" "link link";
     column-gap: 56px;
   }
   .strength-message { grid-area: msg; }
-  .strength-lead { grid-area: lead; align-self: end; }
+  .strength-copy { grid-area: copy; align-self: end; }
   .strength-flow { grid-area: flow; }
-  .strength-facts { grid-area: facts; }
+  .strength-places { grid-area: places; }
   .strength-link { grid-area: link; }
 }
 .strength-label {
@@ -618,7 +618,22 @@ p { margin: 0; text-wrap: pretty; }
 }
 /* 「毎月入れ替わる。」の8文字が、320px幅でも1行に収まる大きさ */
 .strength h2 { margin-top: 14px; color: #FFFFFF; font-size: calc(clamp(27px, 2.6vw + 20px, 54px) * var(--heading-scale)); font-weight: 900; line-height: 1.25; }
-.strength-lead { max-width: 34rem; color: rgba(255, 255, 255, .9); }
+.strength-copy { display: grid; gap: 16px; max-width: 34rem; }
+.strength-lead { color: rgba(255, 255, 255, .92); font-size: calc(var(--font-size-body) * 1.06); line-height: 1.85; }
+/* 費用のめやす：説明より小さく、うすい色で（金額を前面に出さない） */
+.strength-price {
+  display: grid;
+  gap: 2px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, .16);
+  color: rgba(255, 255, 255, .8);
+  font-size: 15px;
+  line-height: 1.75;
+}
+.strength-price-label { color: var(--color-strength-accent); font-size: 14px; font-weight: 700; }
+.strength-price-text .num { font-family: var(--font-family-number); font-weight: 600; letter-spacing: .01em; }
+.strength-price-link { margin-top: -4px; }
+.strength-price-link a { display: inline-flex; align-items: center; min-height: 44px; color: #FFFFFF; font-weight: 700; text-decoration: underline; text-decoration-color: var(--color-strength-accent); text-underline-offset: .25em; }
 .strength a { color: #FFFFFF; }
 .strength :focus-visible { outline-color: #FFFFFF; }
 
@@ -691,6 +706,47 @@ p { margin: 0; text-wrap: pretty; }
 .fact-note { color: rgba(255, 255, 255, .78); font-size: 14px; }
 .strength-link { margin-top: -6px; }
 
+/* 図書スペースの事例：アイコンと名前のカード */
+.strength-places { display: grid; gap: 14px; }
+.strength-places-title { color: rgba(255, 255, 255, .86); font-size: 15px; font-weight: 700; letter-spacing: .04em; }
+.place-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.place {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 22px 22px 24px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .05);
+}
+.place-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(255, 167, 51, .16);
+}
+.place-icon svg { width: 32px; height: 32px; fill: none; stroke: var(--color-strength-accent); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.place-name {
+  color: #FFFFFF;
+  font-family: var(--font-family-display);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.5;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
 /* タブレット・スマホ：流れの図は縦に並べる（横一列だと箱が細くなり、言葉が途中で折れるため） */
 @media (max-width: 959px) {
   .flow { grid-template-columns: 1fr; gap: 0; }
@@ -709,9 +765,18 @@ p { margin: 0; text-wrap: pretty; }
   .flow-node { flex-direction: row; align-items: baseline; gap: 16px; padding: 18px 24px; }
   .flow-text { margin-top: 0; }
 }
+@media (max-width: 959px) {
+  .place-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 719px) {
   .strength-facts { grid-template-columns: 1fr; gap: 10px; }
   .strength-facts li { padding: 18px 20px; }
+  /* スマホ：事例は1列。アイコンを左、名前を右に */
+  .place-list { grid-template-columns: 1fr; gap: 10px; }
+  .place { flex-direction: row; align-items: center; gap: 14px; padding: 14px 16px; }
+  .place-icon { width: 48px; height: 48px; border-radius: 14px; }
+  .place-icon svg { width: 28px; height: 28px; }
+  .place-name { font-size: 16px; }
 }
 @media (max-width: 340px) {
   .strength-slide { padding: 24px 20px; }

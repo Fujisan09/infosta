@@ -65,14 +65,6 @@
   font-style: normal;
   font-display: swap;
   font-weight: 700;
-  src: url(../fonts/zen-kaku-gothic-new-88-700-normal.woff2) format('woff2');
-  unicode-range: U+25bd,U+4e59,U+4ec1,U+4ff3,U+515a,U+518a,U+525b,U+5375,U+552f,U+57a3,U+5b9c,U+5c3d,U+5e3d,U+5e7b,U+5f0a,U+6094,U+6458,U+654f,U+67f3,U+6b8a,U+6bd2,U+6c37,U+6ce1,U+6e56,U+6e7f,U+6ed1,U+6ede,U+6f0f,U+70ad,U+7267,U+7363,U+786c,U+7a42,U+7db2,U+7f85,U+8178,U+829d,U+8896,U+8c5a,U+8cb0,U+8ce2,U+8ed2,U+9047,U+9177,U+970a,U+9ea6,U+ff1b,U+ff31,U+ff39,U+ff80;
-}
-@font-face {
-  font-family: 'Zen Kaku Gothic New';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 700;
   src: url(../fonts/zen-kaku-gothic-new-89-700-normal.woff2) format('woff2');
   unicode-range: U+a5,U+4e80,U+4f34,U+4f73,U+4f75,U+511f,U+5192,U+52aa,U+53c8,U+570f,U+57cb,U+596e,U+5d8b,U+5f66,U+5fd9,U+62db,U+62f6,U+6328,U+633f,U+63a7,U+6469,U+6bbf,U+6c41,U+6c57,U+6d44,U+6dbc,U+706f,U+72c2,U+72ed,U+7551,U+75f4,U+7949,U+7e26,U+7fd4,U+8150,U+8af8,U+8b0e,U+8b72,U+8ca7,U+934b,U+9a0e,U+9a12,U+9b42,U+ff41,U+ff43,U+ff45,U+ff49,U+ff4f,U+ff62-ff63;
 }
@@ -379,14 +371,6 @@
   font-weight: 900;
   src: url(../fonts/zen-kaku-gothic-new-87-900-normal.woff2) format('woff2');
   unicode-range: U+b0,U+226a,U+2462,U+4e39,U+4fc3,U+4fd7,U+50be,U+50da,U+5200,U+5211,U+54f2,U+5618,U+596a,U+5b22,U+5bb4,U+5d50,U+60a3,U+63fa,U+658e,U+65e8,U+6669,U+6795,U+679d,U+67a0,U+6b3a,U+6e09,U+757f,U+7cd6,U+7dbe,U+7ffb,U+83cc,U+83f1,U+840c,U+845b,U+8846,U+8972,U+8a34,U+8a50,U+8a87,U+8edf,U+8ff0,U+90a6,U+9154,U+95a3,U+9663,U+9686,U+96c7,U+ff3c,U+ff7c,U+ff8a;
-}
-@font-face {
-  font-family: 'Zen Kaku Gothic New';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 900;
-  src: url(../fonts/zen-kaku-gothic-new-88-900-normal.woff2) format('woff2');
-  unicode-range: U+25bd,U+4e59,U+4ec1,U+4ff3,U+515a,U+518a,U+525b,U+5375,U+552f,U+57a3,U+5b9c,U+5c3d,U+5e3d,U+5e7b,U+5f0a,U+6094,U+6458,U+654f,U+67f3,U+6b8a,U+6bd2,U+6c37,U+6ce1,U+6e56,U+6e7f,U+6ed1,U+6ede,U+6f0f,U+70ad,U+7267,U+7363,U+786c,U+7a42,U+7db2,U+7f85,U+8178,U+829d,U+8896,U+8c5a,U+8cb0,U+8ce2,U+8ed2,U+9047,U+9177,U+970a,U+9ea6,U+ff1b,U+ff31,U+ff39,U+ff80;
 }
 @font-face {
   font-family: 'Zen Kaku Gothic New';
