@@ -1540,7 +1540,7 @@
       section.appendChild(row);
       const actions = el('p', { class: 'item-actions' });
       if (m.status !== 'suspended') {
-        actions.appendChild(el('button', { type: 'button', class: 'btn btn--secondary btn--small', 'data-shared-change': true, 'aria-expanded': String(sharedState.changing), text: T.sharedChange, onclick: () => { sharedState.changing = !sharedState.changing; sharedState.notice = ''; renderAdmin(); const f = q('#change-pass'); if (f) f.focus(); } }));
+        actions.appendChild(el('button', { type: 'button', class: 'btn btn--secondary btn--small', 'data-shared-change': true, 'aria-expanded': String(sharedState.changing), text: T.sharedChange, onclick: () => { sharedState.changing = !sharedState.changing; sharedState.notice = ''; renderAdmin(); const f = q('#change-id'); if (f) f.focus(); } }));
       }
       const toggle = el('button', { type: 'button', class: 'btn btn--quiet btn--small', 'data-label': m.status === 'suspended' ? T.resume : T.suspend, text: m.status === 'suspended' ? T.resume : T.suspend, onclick: async (event) => {
         const button = event.target;
@@ -1562,20 +1562,40 @@
       actions.appendChild(toggle);
       section.appendChild(actions);
       if (sharedState.changing && m.status !== 'suspended') {
-        const pair = passwordPair('change');
+        const idNow = loginIdOf(m.email);
+        const idField = el('input', { id: 'change-id', type: 'text', maxlength: '40', autocomplete: 'off', autocapitalize: 'none', spellcheck: 'false', value: idNow, 'aria-describedby': 'change-id-hint' });
+        const p1 = el('input', { id: 'change-pass', type: 'password', autocomplete: 'new-password', minlength: '6' });
+        const p2 = el('input', { id: 'change-pass-2', type: 'password', autocomplete: 'new-password', minlength: '6' });
         const error = el('p', { class: 'form-error', role: 'alert' });
         const submit = el('button', { type: 'submit', class: 'btn btn--primary', text: T.sharedChangeSubmit });
-        const form = el('form', { class: 'shared-form', novalidate: true, 'aria-label': T.sharedChange }, [el('p', { class: 'note', text: T.sharedChangeLead }), ...pair.nodes, error, submit]);
+        const form = el('form', { class: 'shared-form', novalidate: true, 'aria-label': T.sharedChange }, [
+          el('p', { class: 'note', text: T.sharedChangeLead }),
+          el('div', { class: 'field' }, [el('label', { for: 'change-id', text: T.sharedIdLabel }), idField, el('p', { class: 'hint', id: 'change-id-hint', text: T.sharedIdHint })]),
+          el('div', { class: 'field' }, [el('label', { for: 'change-pass', text: T.sharedNewPassLabel }), p1]),
+          el('div', { class: 'field' }, [el('label', { for: 'change-pass-2', text: T.sharedPass2Label }), p2]),
+          error,
+          submit
+        ]);
         let sending = false;
         form.addEventListener('submit', async (event) => {
           event.preventDefault();
           if (sending) return;
           error.textContent = '';
-          const bad = pair.problem();
-          if (bad) { error.textContent = bad; pair.p1.focus(); return; }
+          const id = idField.value.trim().toLowerCase();
+          if (!/^[a-z0-9][a-z0-9._-]{2,39}$/.test(id)) { error.textContent = T.sharedIdInvalid; idField.focus(); return; }
+          const idChanged = id !== idNow.toLowerCase();
+          const passGiven = p1.value.length > 0 || p2.value.length > 0;
+          if (passGiven) {
+            if (p1.value.length < 6 || p1.value.length > 72) { error.textContent = T.sharedPassShort; p1.focus(); return; }
+            if (p1.value !== p2.value) { error.textContent = T.sharedPassMismatch; p2.focus(); return; }
+          }
+          if (!idChanged && !passGiven) { error.textContent = T.sharedNothing; p1.focus(); return; }
+          const payload = { action: 'update_shared', member_id: m.id };
+          if (idChanged) payload.login_email = loginEmailOf(id);
+          if (passGiven) payload.password = p1.value;
           sending = true;
           busy(submit, true, T.sending);
-          const r = await invokeAdmin('board-admin', { action: 'set_password', member_id: m.id, password: pair.p1.value });
+          const r = await invokeAdmin('board-admin', payload);
           sending = false;
           busy(submit, false, T.sharedChangeSubmit);
           if (!r.ok) { error.textContent = r.message; return; }
