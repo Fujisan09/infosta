@@ -194,6 +194,12 @@ p { margin: 0; text-wrap: pretty; }
   cursor: pointer;
 }
 .preview-bar button:focus-visible { outline-color: #FFFFFF; }
+/* スマホ（390px幅くらいから）では1行に収め、ファーストビューの写真の帯が見える高さを残す */
+@media (max-width: 479px) {
+  .preview-bar .container { gap: 6px 8px; }
+  .preview-bar strong { margin-right: .4em; padding-inline: 6px; }
+  .preview-bar button { padding-inline: 10px; }
+}
 
 /* ───────── ヘッダー ───────── */
 .site-header {
@@ -366,23 +372,31 @@ p { margin: 0; text-wrap: pretty; }
 }
 
 /* ───────── ファーストビュー ───────── */
+/*
+  並び：文章 → 写真の帯 → 概念図。PC（960px以上）では文章と概念図を横に並べ、
+  写真の帯（高さは画面の約1/3、横いっぱい）を、最初の画面の下で少し見切れる位置に置く。
+  --hero-top は、ページの上からこの区画までの高さ（確認版の帯＋ヘッダー。site.js が測る）。
+*/
 .hero {
+  --hero-gutter-l: max(var(--gutter), env(safe-area-inset-left, 0px));
+  --hero-gutter-r: max(var(--gutter), env(safe-area-inset-right, 0px));
+  --gallery-h: clamp(170px, 33svh, 400px);
+  --gallery-gap: clamp(24px, 4.5svh, 52px);
   position: relative;
-  padding-top: clamp(28px, 4vw, 56px);
+  display: grid;
+  grid-template-columns: [full-start] var(--hero-gutter-l) [content-start] minmax(0, 1fr) [content-end] var(--hero-gutter-r) [full-end];
+  align-content: start;
+  padding-top: clamp(24px, 4svh, 56px);
   background:
     radial-gradient(60% 60% at 85% 20%, rgba(240, 140, 0, .10), transparent 70%),
     radial-gradient(40% 40% at 0% 100%, rgba(15, 59, 46, .05), transparent 70%);
 }
-.hero-grid { display: grid; gap: clamp(20px, 5vw, 56px); align-items: center; }
-@media (min-width: 960px) {
-  .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(380px, 470px); }
-}
-.hero-text { max-width: 44rem; }
+.hero-text { grid-column: content; max-width: 44rem; }
 .hero-kicker {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 22px;
+  margin-bottom: clamp(12px, 2svh, 22px);
   padding: 5px 14px 5px 12px;
   border-radius: 999px;
   background: var(--color-surface);
@@ -393,16 +407,107 @@ p { margin: 0; text-wrap: pretty; }
 }
 .hero-kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--color-accent-strong); }
 .hero h1 { font-size: var(--font-size-h1); font-weight: 900; line-height: 1.24; letter-spacing: .01em; }
-.hero-description { max-width: 34em; margin-top: 28px; font-size: calc(var(--font-size-body) * 1.06); }
+.hero-description { max-width: 34em; margin-top: clamp(16px, 2.6svh, 28px); font-size: calc(var(--font-size-body) * 1.06); }
 .hero-attribution { margin-top: 12px; color: var(--color-muted); font-size: var(--font-size-small); font-weight: 700; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
-.hero-photo { margin: clamp(28px, 5vw, 64px) 0 0; overflow: hidden; border-radius: var(--radius-large); background: var(--color-mist); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(20px, 3.4svh, 36px); }
+/* 写真の帯がないときの1枚の写真 */
+.hero-photo { grid-column: content; margin: clamp(28px, 5vw, 64px) 0 0; overflow: hidden; border-radius: var(--radius-large); background: var(--color-mist); }
 .hero-photo img { width: 100%; height: clamp(170px, 22vw, 320px); object-fit: cover; }
 
+/* 写真の帯：同じ並びを2組続け、半分の幅だけ動かして途切れずに流す */
+.hero-gallery {
+  grid-column: full;
+  position: relative;
+  margin-top: var(--gallery-gap);
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  /* 写真の吸着位置を左右の余白の内側にする（最初の写真が余白の位置から始まる） */
+  scroll-padding-inline: var(--hero-gutter-l) var(--hero-gutter-r);
+  scrollbar-width: none;
+}
+.hero-gallery::-webkit-scrollbar { display: none; }
+.gallery-track { display: flex; width: max-content; margin: 0; padding: 0 var(--hero-gutter-r) 0 var(--hero-gutter-l); list-style: none; }
+.gallery-item {
+  flex: none;
+  height: var(--gallery-h);
+  aspect-ratio: 7 / 5;
+  margin-right: clamp(10px, 1.2vw, 16px);
+  overflow: hidden;
+  border-radius: clamp(16px, 1.6vw, 24px);
+  background: var(--color-mist);
+  scroll-snap-align: start;
+}
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 719px) { .gallery-item { aspect-ratio: 6 / 5; } }
+/* 動かさないとき（JavaScriptなし・動きを減らす設定）は、繰り返しの分を出さず、指で横に送れるようにする */
+.hero-gallery:not(.is-moving) .gallery-item[aria-hidden="true"] { display: none; }
+.hero-gallery.is-moving { overflow: hidden; scroll-snap-type: none; }
+.hero-gallery.is-moving .gallery-track { padding: 0; animation: gallery-flow var(--gallery-duration, 80s) linear infinite; will-change: transform; }
+.hero-gallery.is-paused .gallery-track,
+.hero-gallery.is-offscreen .gallery-track,
+.hero-gallery:focus-within .gallery-track { animation-play-state: paused; }
+@media (hover: hover) {
+  .hero-gallery.is-moving:hover .gallery-track { animation-play-state: paused; }
+}
+@keyframes gallery-flow { to { transform: translateX(-50%); } }
+.gallery-toggle {
+  position: absolute;
+  z-index: 2;
+  top: 14px;
+  right: var(--hero-gutter-r);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 6px 16px 6px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .94);
+  box-shadow: 0 6px 18px rgba(35, 24, 21, .18);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.gallery-toggle-icon { position: relative; width: 12px; height: 12px; }
+.gallery-toggle-icon::before,
+.gallery-toggle-icon::after { content: ""; position: absolute; top: 0; width: 4px; height: 12px; border-radius: 1px; background: currentColor; }
+.gallery-toggle-icon::before { left: 1px; }
+.gallery-toggle-icon::after { right: 1px; }
+/* 止めているときは、再生の三角 */
+.hero-gallery.is-paused .gallery-toggle-icon::before { left: 2px; width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 10px solid currentColor; border-radius: 0; background: none; }
+.hero-gallery.is-paused .gallery-toggle-icon::after { display: none; }
+
+@media (min-width: 960px) {
+  .hero {
+    --hero-side: max(var(--gutter), calc((100% - var(--page-max)) / 2));
+    --hero-pad: clamp(16px, 3svh, 56px);
+    --concept-pad: clamp(20px, 3svh, 40px);
+    /* 写真の帯のうち、最初の画面の外に出る割合（約2割が見切れる） */
+    --gallery-peek: .2;
+    /* 概念図は、文章の横で「画面の高さ − 写真の帯の見える部分」に収まる大きさにする */
+    --concept-w: clamp(250px, calc(100svh - var(--hero-top, 140px) - var(--hero-pad) - var(--concept-pad) * 2 - var(--gallery-gap) - var(--gallery-h) * (1 - var(--gallery-peek))), 470px);
+    grid-template-columns: [full-start] var(--hero-side) [content-start] minmax(0, 1fr) clamp(28px, 4vw, 64px) var(--concept-w) [content-end] var(--hero-side) [full-end];
+    grid-template-rows: 1fr auto;
+    min-height: calc(100svh - var(--hero-top, 140px) + var(--gallery-h) * var(--gallery-peek));
+    padding-top: var(--hero-pad);
+  }
+  /* 画面の高さが低いPCでは見出しを1行に収め、写真の帯が見える高さを残す */
+  .hero h1 { font-size: min(var(--font-size-h1), calc(7.2svh * var(--heading-scale))); }
+  .hero-text { grid-column: 2; grid-row: 1; align-self: center; max-width: 50rem; }
+  .hero-gallery, .hero-photo { grid-row: 2; }
+  .hero-photo { grid-column: content; }
+}
+
 /* 活動のめぐり（概念図）：4つの点を時計回りの輪でつなぐ。文字はHTMLなので、図が縮んでも小さくならない */
-.concept { width: 100%; max-width: 470px; margin: 0; padding-block: 34px; justify-self: center; }
-@media (min-width: 960px) { .concept { justify-self: end; } }
-.concept-stage { position: relative; width: 100%; aspect-ratio: 1 / 1; }
+.concept { grid-column: content; width: 100%; max-width: 470px; margin: clamp(12px, 3vw, 28px) 0 0; padding-block: 34px; justify-self: center; }
+@media (min-width: 960px) {
+  .concept { grid-column: 4; grid-row: 1; align-self: center; justify-self: end; max-width: none; margin: 0; padding-block: var(--concept-pad); }
+}
+.concept-stage { position: relative; width: 100%; aspect-ratio: 1 / 1; container-type: inline-size; }
 .concept-ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .concept-orbit { fill: none; stroke: var(--color-accent); stroke-opacity: .3; stroke-width: 1.2; }
 .concept-disk { fill: var(--color-tint); }
@@ -434,6 +539,16 @@ p { margin: 0; text-wrap: pretty; }
   .concept-step { width: 43%; }
   .concept-step-title { font-size: 15px; }
   .concept-center { width: 38%; font-size: 14px; }
+}
+/* 図が小さくなったとき（画面の高さが低いPCなど）も、段階名が1行に収まるように */
+@container (max-width: 400px) {
+  .concept-step { width: 43%; }
+  .concept-step-title { font-size: 15px; }
+  .concept-center { width: 38%; font-size: 14px; }
+}
+/* さらに小さいとき：中央の文の読点（、）が行の頭に来ないよう、文の幅を広げる */
+@container (max-width: 290px) {
+  .concept-center { width: 46%; }
 }
 .concept-step--1 { left: 0; bottom: 80%; }
 .concept-step--2 { right: 0; bottom: 80%; text-align: right; }

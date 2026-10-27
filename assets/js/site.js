@@ -1,5 +1,6 @@
 /*
   情報ステーション：ページ全体の操作
+  - ファーストビューの写真の帯（横に流す・止める）
   - ヘッダーの線（スクロールしたとき）
   - スマホ・タブレット幅のメニュー
   - スマホの画面の下の案内（相談する・関わり方を見る）
@@ -11,6 +12,66 @@
   'use strict';
 
   var doc = document.documentElement;
+
+  /* ───── ファーストビュー：ページの上からの高さを測り、写真の帯が最初の画面の下で少し見切れるようにする ───── */
+  var hero = document.querySelector('.hero');
+  var setHeroTop = function () {
+    if (hero) hero.style.setProperty('--hero-top', Math.round(hero.getBoundingClientRect().top + window.scrollY) + 'px');
+  };
+  setHeroTop();
+  window.addEventListener('resize', setHeroTop);
+  window.addEventListener('load', setHeroTop);
+  // 確認版の帯のボタンが出たときや、文字の読み込みで上の高さが変わったときも測り直す
+  if (hero && 'ResizeObserver' in window) {
+    var heroAbove = new ResizeObserver(function () { setHeroTop(); });
+    ['.preview-bar', '.site-header'].forEach(function (selector) {
+      var el = document.querySelector(selector);
+      if (el) heroAbove.observe(el);
+    });
+  }
+
+  /* ───── 写真の帯：横に流す（止めるボタンつき。動きを減らす設定では流さず、指で横に送る） ───── */
+  var refreshGallery = function () {};
+  var gallery = document.querySelector('[data-gallery]');
+  if (gallery) {
+    var galleryTrack = gallery.querySelector('.gallery-track');
+    var galleryToggle = gallery.querySelector('[data-gallery-toggle]');
+    var galleryLabel = galleryToggle ? galleryToggle.querySelector('[data-gallery-toggle-label]') : null;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var canMove = function () { return !reduceMotion.matches && doc.dataset.motion !== 'none'; };
+    // 1組目（全体の半分）を、1秒に約36px進む速さで流す
+    var setSpeed = function () {
+      var half = galleryTrack.scrollWidth / 2;
+      if (half > 0) galleryTrack.style.setProperty('--gallery-duration', Math.max(20, Math.round(half / 36)) + 's');
+    };
+    var setPaused = function (paused) {
+      gallery.classList.toggle('is-paused', paused);
+      if (galleryLabel) galleryLabel.textContent = paused ? galleryToggle.dataset.labelPlay : galleryToggle.dataset.labelPause;
+    };
+    refreshGallery = function () {
+      var moving = canMove();
+      gallery.classList.toggle('is-moving', moving);
+      // 指で送れる状態から流す状態に変わるとき、横の位置を始めに戻す（止めるボタンの位置もずれない）
+      gallery.scrollLeft = 0;
+      if (galleryToggle) galleryToggle.hidden = !moving;
+      if (!moving) setPaused(false);
+      setSpeed();
+    };
+    if (galleryToggle) {
+      galleryToggle.addEventListener('click', function () { setPaused(!gallery.classList.contains('is-paused')); });
+    }
+    // 画面の外にあるときは止めておく（電池と処理の節約）
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { gallery.classList.toggle('is-offscreen', !entry.isIntersecting); });
+      }).observe(gallery);
+    }
+    window.addEventListener('resize', setSpeed);
+    window.addEventListener('load', setSpeed);
+    if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', refreshGallery);
+    else if (reduceMotion.addListener) reduceMotion.addListener(refreshGallery);
+    refreshGallery();
+  }
 
   /* ───── ヘッダー：少しスクロールしたら下に線を出す ───── */
   var header = document.querySelector('.site-header');
@@ -256,6 +317,7 @@
         delete doc.dataset.motion;
         storage.remove(STORE_MOTION);
       }
+      refreshGallery();
     });
   }
 
@@ -308,6 +370,7 @@
     delete doc.dataset.showBasis;
     if (basisToggle) basisToggle.checked = false;
     syncInputs();
+    refreshGallery();
     tuneStatus.textContent = '初期値に戻しました。';
   });
 })();
