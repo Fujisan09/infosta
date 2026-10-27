@@ -1,25 +1,26 @@
 <!doctype html>
-<html lang="ja" class="no-js">
+<html lang="ja">
 <head>
+<meta http-equiv="Content-Security-Policy" content="default-src &#39;self&#39;; script-src &#39;self&#39;; style-src &#39;self&#39;; img-src &#39;self&#39; data:; font-src &#39;self&#39;; connect-src &#39;self&#39;; object-src &#39;none&#39;; base-uri &#39;self&#39;; form-action &#39;self&#39;">
+<meta name="referrer" content="no-referrer">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>理事のページ｜NPO法人 情報ステーション</title>
-<meta name="description" content="理事向けのお知らせ・活動記録と、議題ごとに話し合える場です。">
+<meta name="description" content="理事向けのお知らせと、議題ごとに話し合える場です。理事の共通のID・パスワードで入ります。">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:site_name" content="NPO法人 情報ステーション">
 <meta property="og:title" content="理事のページ｜NPO法人 情報ステーション">
-<meta property="og:description" content="理事向けのお知らせ・活動記録と、議題ごとに話し合える場です。">
+<meta property="og:description" content="理事向けのお知らせと、議題ごとに話し合える場です。理事の共通のID・パスワードで入ります。">
 
 
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="../assets/img/infosta-symbol.gif" type="image/gif">
-<link rel="stylesheet" href="../assets/css/fonts.css?v=9baf9171">
-<link rel="stylesheet" href="../assets/css/tokens.css?v=9baf9171">
-<link rel="stylesheet" href="../assets/css/site.css?v=9baf9171">
-<link rel="stylesheet" href="../assets/css/board.css?v=9baf9171">
-<script>document.documentElement.classList.replace('no-js','js');try{if(sessionStorage.getItem('infosta-board-session'))document.documentElement.classList.add('board-resume');}catch(e){}</script>
+<link rel="stylesheet" href="../assets/css/fonts.css?v=0037c8ae">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=0037c8ae">
+<link rel="stylesheet" href="../assets/css/site.css?v=0037c8ae">
+<link rel="stylesheet" href="../assets/css/board.css?v=0037c8ae">
 </head>
 <body class="board-page">
 <a class="skip-link" href="#board-main">本文へ移動</a>
@@ -27,33 +28,72 @@
   <div class="container header-inner">
     <a class="logo" href="../"><img src="../assets/img/infosta-logo.gif" width="250" height="60" alt="情報ステーション（ホームページへ）"></a>
     <p class="board-name">理事のページ</p>
+    <p class="board-user" data-user hidden></p>
     <button type="button" class="btn btn--quiet board-logout" data-logout hidden>ログアウト</button>
   </div>
 </header>
 
 <main id="board-main" class="board-main">
-  <section class="board-login" data-view="login" aria-labelledby="login-title">
-    <div class="container">
-      <div class="login-card">
-        <h1 id="login-title">理事のページ</h1>
-        <p class="login-lead">理事向けのお知らせ・活動記録と、議題ごとに話し合える場です。</p>
-        <noscript><p class="form-error">このページを使うには、JavaScriptを有効にしてください。</p></noscript>
-        <form class="login-form" data-login-form novalidate>
-          <div class="field">
-            <label for="board-id">ID</label>
-            <input id="board-id" name="username" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required>
-          </div>
-          <div class="field">
-            <label for="board-pass">パスワード</label>
-            <input id="board-pass" name="password" type="password" autocomplete="current-password" required>
-          </div>
-          <p class="form-error" data-login-error role="alert" aria-live="assertive"></p>
-          <button type="submit" class="btn btn--primary login-submit" data-login-submit>入る</button>
-        </form>
-        <p class="login-note">試作のページです。見本のデータで動いています。</p>
-        <p class="login-back"><a href="../">ホームページに戻る</a></p>
-      </div>
-    </div>
+  <p class="board-loading" data-view="loading">読み込んでいます…</p>
+
+  <section class="board-login" data-view="setup" aria-labelledby="setup-title" hidden>
+    <div class="container"><div class="login-card">
+      <h1 id="setup-title">準備中です</h1>
+      <p class="login-lead">理事のページは、使い始める準備をしています。使えるようになったら、管理者からお知らせします。</p>
+      <p class="login-back"><a href="../">ホームページに戻る</a></p>
+    </div></div>
+  </section>
+
+  <section class="board-login" data-view="login" aria-labelledby="login-title" hidden>
+    <div class="container"><div class="login-card">
+      <h1 id="login-title">理事のページ</h1>
+      <p class="login-lead">理事向けのお知らせと、議題ごとに話し合える場です。理事の共通のID・パスワードで入ります。</p>
+      <noscript><p class="form-error">このページを使うには、JavaScriptを有効にしてください。</p></noscript>
+      <p class="form-notice" data-login-notice role="status" hidden></p>
+      <form class="login-form" data-login-form novalidate>
+        <div class="field">
+          <label for="board-id">ID</label>
+          <input id="board-id" name="username" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required aria-describedby="board-id-hint">
+          <p class="hint" id="board-id-hint">管理用IDの人は、メールアドレスを入れます。</p>
+        </div>
+        <div class="field">
+          <label for="board-pass">パスワード</label>
+          <input id="board-pass" name="password" type="password" autocomplete="current-password" required>
+        </div>
+        <p class="form-error" data-login-error role="alert" aria-live="assertive"></p>
+        <button type="submit" class="btn btn--primary login-submit" data-login-submit>ログイン</button>
+      </form>
+      <p class="login-note">ID・パスワードが分からないときは、事務局（管理者）に聞いてください。</p>
+      <p class="login-back"><a href="../">ホームページに戻る</a></p>
+    </div></div>
+  </section>
+
+  <section class="board-login" data-view="password" aria-labelledby="password-title" hidden>
+    <div class="container"><div class="login-card">
+      <h1 id="password-title" tabindex="-1">パスワードを決める</h1>
+      <p class="login-lead" data-password-lead></p>
+      <form class="login-form" data-password-form novalidate>
+        <div class="field">
+          <label for="new-pass">新しいパスワード</label>
+          <input id="new-pass" type="password" autocomplete="new-password" minlength="8" required aria-describedby="new-pass-hint">
+          <p class="hint" id="new-pass-hint">8文字以上。ほかのサービスと同じものは避けてください。</p>
+        </div>
+        <div class="field">
+          <label for="new-pass-2">新しいパスワード（もう一度）</label>
+          <input id="new-pass-2" type="password" autocomplete="new-password" minlength="8" required>
+        </div>
+        <p class="form-error" data-password-error role="alert" aria-live="assertive"></p>
+        <button type="submit" class="btn btn--primary login-submit" data-password-submit>決めて入る</button>
+      </form>
+    </div></div>
+  </section>
+
+  <section class="board-login" data-view="denied" aria-labelledby="denied-title" hidden>
+    <div class="container"><div class="login-card">
+      <h1 id="denied-title" tabindex="-1">この理事のページを使う許可がありません</h1>
+      <p class="login-lead" data-denied-text>このIDは、理事のページの名簿に入っていません。事務局（管理者）に連絡してください。</p>
+      <p class="login-back"><a href="../">ホームページに戻る</a></p>
+    </div></div>
   </section>
 
   <div class="board-app" data-view="app" hidden>
@@ -61,17 +101,22 @@
       <div class="container">
         <ul>
           <li><a href="#home" data-tab="home">ホーム</a></li>
-          <li><a href="#news" data-tab="news">ニュース</a></li>
+          <li><a href="#news" data-tab="news">お知らせ</a></li>
           <li><a href="#talk" data-tab="talk">議論の場</a></li>
+          <li data-admin-only hidden><a href="#admin" data-tab="admin">管理</a></li>
         </ul>
       </div>
     </nav>
     <div class="container">
-      <p class="sample-banner">見本のデータで動いています。書き込みは、この端末の中だけに保存されます。</p>
+      <div class="update-bar" data-update-bar role="status" hidden>
+        <span data-update-text></span>
+        <button type="button" class="btn btn--secondary" data-update-load>読み込む</button>
+      </div>
       <section class="board-panel" data-panel="home" aria-labelledby="home-title" hidden></section>
       <section class="board-panel" data-panel="news" aria-labelledby="news-title" hidden></section>
       <section class="board-panel" data-panel="talk" aria-labelledby="talk-title" hidden></section>
       <section class="board-panel" data-panel="space" aria-labelledby="space-title" hidden></section>
+      <section class="board-panel" data-panel="admin" aria-labelledby="admin-title" hidden></section>
       <p class="board-status visually-hidden" data-board-status role="status" aria-live="polite"></p>
     </div>
   </div>
@@ -83,9 +128,10 @@
     <p class="footer-note">NPO法人 情報ステーション</p>
   </div>
 </footer>
-<script type="application/json" id="board-data">{"isSample":true,"login":{"id":"infosta","salt":"fc7846daab88de37048f90c8","iterations":3000,"hash":"f405f24c500ea46e255e4cdcd4dffcf15ad9da65ecb0a04a44f49d5d2c6df5d4"},"texts":{"pageTitle":"理事のページ｜NPO法人 情報ステーション","title":"理事のページ","loginLead":"理事向けのお知らせ・活動記録と、議題ごとに話し合える場です。","idLabel":"ID","passLabel":"パスワード","submit":"入る","checking":"確認しています…","loginError":"IDかパスワードが違います。","loginEmpty":"IDとパスワードを入れてください。","trialNote":"試作のページです。見本のデータで動いています。","backToSite":"ホームページに戻る","noScript":"このページを使うには、JavaScriptを有効にしてください。","sampleBanner":"見本のデータで動いています。書き込みは、この端末の中だけに保存されます。","logout":"ログアウト","tabs":{"home":"ホーム","news":"ニュース","talk":"議論の場"},"welcome":"理事向けのお知らせ、伝えるときの材料、議題ごとの話し合いの場です。","newsTitle":"理事向けニュース","newsLead":"事業ごとのゾーンに分けて、お知らせ・活動記録・理事会の連絡をまとめています。","newsMore":"ニュースを見る","talkTitle":"議論の場","talkLead":"議題ごとにスペースを分けています。話がほかの話題に流れていかないよう、続きは同じスペースに書き込みます。","talkMore":"議論の場へ","hotWordsTitle":"いま飛び交っている言葉","hotWordsNote":"最近の書き込みによく出る言葉ほど、大きく表示しています。","spacesTitle":"議題のスペース","weekCount":"今週 {count}件","lastPost":"最後の書き込み {when}","noPosts":"まだ書き込みはありません","openSpace":"このスペースを開く","addSpace":"議題を追加する","addSpaceTitle":"議題の名前","addSpacePurpose":"何を話し合うか（ひとこと）","addSpaceSubmit":"スペースをつくる","addSpaceCancel":"やめる","addSpaceDone":"「{title}」のスペースをつくりました。","backToTalk":"議論の場へ戻る","summaryTitle":"いまの論点","wordsTitle":"よく出ている言葉","wordsRecent":"最近","wordsAll":"これまで全部","wordsEmpty":"書き込みが増えると、よく出る言葉がここに表示されます。","wordsHint":"言葉を選ぶと、その言葉を含む書き込みだけを表示します。","postsTitle":"書き込み","postsCount":"{count}件","filterOn":"「{word}」を含む書き込み：{count}件","filterClear":"絞り込みを解除","composerTitle":"書き込む","nameLabel":"表示する名前","namePlaceholder":"例：理事 山田","textLabel":"書き込む内容","postSubmit":"書き込む","postEmpty":"書き込む内容を入れてください。","postDone":"書き込みました。","localNote":"この試作では、書き込みはこの端末のブラウザの中だけに保存されます。ほかの理事には届きません。","resetLocal":"この端末の書き込みを消す","resetDone":"この端末に保存した書き込みとスペースを消しました。","you":"あなた","sampleTag":"見本","time":{"now":"たった今","minutes":"{n}分前","hours":"{n}時間前","yesterday":"昨日","days":"{n}日前"},"zoneAll":"すべてのゾーン","zoneMore":"{zone}をすべて見る（{count}件）","zoneEmpty":"まだ載っていません。","zoneBack":"すべてのゾーンへ戻る","growthTitle":"目標と進み具合","growthPending":"数字は確認中です。理事会で決めた数字を入れます。","strategyTitle":"成長戦略（案）","directionLabel":"向かう先","unitMissing":"—","types":{"notice":"お知らせ","record":"活動記録","board":"理事会"}},"zones":[{"id":"general","label":"全体","text":"理事会と、法人全体のお知らせ","tone":"slate"},{"id":"library","label":"図書事業","text":"民間図書館の開設・蔵書・棚の入れ替え","tone":"orange"},{"id":"btype","label":"B型就労者事業","text":"B型就労者事業のお知らせと記録","tone":"teal"},{"id":"community","label":"地域活性化事業","text":"地域の催しや活動のサポート","tone":"green"},{"id":"handover","label":"手渡し図書館事業","text":"手渡し図書館のお知らせと記録","tone":"blue"}],"growth":{"metric":"小さな図書館・交流の空間の数","unit":"か所","current":{"label":"いま","value":null,"asOf":null},"projected":{"label":"開館見込みを入れると","value":null},"target":{"label":"目標","value":null,"year":null},"direction":"全国どこでも利用できるように、新しい民間図書館を増やす。","how":[{"label":"強み","text":"寄贈本を、貸出しのデータと選書で毎月入れ替える「蔵書と流通」のしくみ。"},{"label":"組む相手","text":"本棚を置ける場所を持つ事業者・施設（マンション、福祉施設、商店街、商業施設など）。"},{"label":"理事の役割","text":"それぞれの分野のつながりと言葉で情報ステーションを伝え、開設の相談先を見つけ、つなぐ。"}]},"shareKit":{"title":"伝えるときの材料","lead":"ひとりの言葉だけでは届かない人にも、理事それぞれの言葉なら届きます。紹介するときは、この材料に、あなたの分野の言葉を足してください。","items":[{"label":"ひとことで","text":"本をきっかけに、人が出会う。"},{"label":"強み","text":"棚の本が、毎月入れ替わる図書館です。寄贈で集まった本を、貸出しのデータとボランティアの選書をもとに、毎月入れ替えています。"},{"label":"たとえるなら","text":"民間図書館は、まちの土台（OS）です。いつでも立ち寄れる図書館の上で、催しや地域の活動が動きます。催しはその日だけでも、図書館はまちに残ります。"},{"label":"数字","text":"全国の民間図書館に並ぶ寄贈本は、約14万冊（2025年度時点）。"},{"label":"見てもらうページ","text":"https://www.infosta.org/","note":"新しいホームページを公開したら、そのURLに変えます。"}],"copy":"コピー","copied":"コピーしました。","copyFailed":"コピーできませんでした。文章を長押しして選んでください。"},"wordmap":{"halfLifeDays":7,"maxWords":24,"glossary":["管理組合","空き店舗","福祉施設","共有スペース","商店街","商業施設","選書","寄贈","絵本","児童書","会員","寄付","支援企業","クラウドファンディング","活動記録","理事会","見学","子育て世代","保育園","幼稚園","学生","ボランティア","書庫整理","年度替わり","受け付け場所","開設費","説明文","使い道","待合スペース","棚づくり","入れ替え"],"stopwords":["情報ステーション","理事","皆さん","自分","今回","今後","以前","最近","必要","大事","可能","場合","部分","一緒","意見","感じ","思い","方法","本当","全体","以上","次回","今日","今週","先週","来週","明日","昨日","一つ","三つ","人","方","時","今","後","前","中","上","下","日","月","年","回","件","度","点","声","気","話","力","先","次","他","何","私","皆","案","例","数","側","的","手","目","形","所","事","物","者","等","化","性","面","間","週","種類","時期","一環","向け","魅力","一人","一冊","具体的","企業"]},"news":[{"id":"n1","zone":"general","type":"notice","daysAgo":0,"title":"理事のページを試作しました","body":["理事向けのお知らせと、議題ごとに話し合える場を試作しました。いまは見本のデータで、使い勝手を確かめている段階です。","気づいたことは、議論の場の「このページの使い方・要望」に書き込んでください。"],"sample":true},{"id":"n2","zone":"general","type":"board","daysAgo":3,"title":"次回理事会の議題（見本）","body":["理事会の議題と資料を、ここで事前に共有する想定です。","例：新しい図書館の候補地について／本の寄贈の呼びかけについて／会員の募集について"],"sample":true},{"id":"n3","zone":"library","type":"record","daysAgo":6,"title":"棚の入れ替えの記録（見本）","body":["書き方の例：○月○日　△△の図書館で、児童書の棚を入れ替え。利用者から絵本のリクエストが2件。次回は図鑑を多めに。"],"sample":true},{"id":"n4","zone":"library","type":"notice","daysAgo":10,"title":"新しい図書館の開設準備（見本）","body":["書き方の例：開設を準備している場所、開館の見込みの時期、手伝ってほしいことを書きます。開館の見込みは「目標と進み具合」の数字にも反映します。"],"sample":true},{"id":"n5","zone":"btype","type":"notice","daysAgo":5,"title":"B型就労者事業の連絡（見本）","body":["このゾーンには、B型就労者事業のお知らせと活動記録を載せます。書き方の例：今月の予定、関わった人数、次に向けて相談したいこと。"],"sample":true},{"id":"n6","zone":"community","type":"record","daysAgo":8,"title":"地域の催しへの協力の記録（見本）","body":["書き方の例：催しの名前、関わった内容（広報・運営・資金づくりのどれか）、次に生かすこと。"],"sample":true},{"id":"n7","zone":"handover","type":"record","daysAgo":14,"title":"手渡し図書館の記録（見本）","body":["このゾーンには、手渡し図書館事業のお知らせと活動記録を載せます。書き方の例：日付、場所、届けた冊数、受け取った人の声。"],"sample":true},{"id":"n8","zone":"general","type":"notice","daysAgo":18,"title":"議論の場の使い方","body":["話し合いたいことは、議題ごとのスペースに書き込みます。話がほかの話題に流れていかないよう、続きは同じスペースへ。","スペースの上の言葉の図は、最近よく出ている言葉ほど大きく表示されます。いま何が話題になっているかの目安です。"],"sample":true}],"spaces":[{"id":"places","title":"新しい図書館の場所","purpose":"本のある交流の場を、どこにひらけるか。候補や、声をかけられる先を出し合います。","summary":"候補：マンションの共有スペース、福祉施設の待合スペース、商店街の空き店舗。次は見学の段取り。","sample":true,"posts":[{"author":"Aさん","daysAgo":5,"time":"19:10","text":"マンションの共有スペースは、管理組合に話を通せば使わせてもらえることがありそうです。知っている管理組合があれば教えてください。"},{"author":"Bさん","daysAgo":4,"time":"21:30","text":"福祉施設の待合スペースも相性がいいと思います。本があると、待ち時間に会話が生まれやすいので。"},{"author":"Cさん","daysAgo":3,"time":"08:05","text":"商店街の空き店舗は、期間を決めて借りられる仕組みがあるか調べてみます。"},{"author":"Aさん","daysAgo":2,"time":"12:40","text":"空き店舗なら、地域の催しと組み合わせると人が集まりやすいですね。商店街の催しの日に合わせて、本の交換会をするのも面白そう。"},{"author":"Dさん","daysAgo":1,"time":"20:15","text":"候補を三つくらいに絞って、見学に行きませんか。管理組合への説明用に、短い資料もあると話しやすいです。"},{"author":"Bさん","daysAgo":0,"time":"09:20","text":"見学、行きます。福祉施設の候補も一つ当たってみます。"}]},{"id":"youth","title":"若い世代に知ってもらう","purpose":"学生や子育て世代など、これまで届いていなかった人に知ってもらう方法。","summary":"SNSで、棚の写真と一冊の紹介を続ける。保育園や幼稚園のお便りで紹介してもらう。","sample":true,"posts":[{"author":"Eさん","daysAgo":3,"time":"22:00","text":"SNSでは、棚の写真と一冊の紹介を短く載せるのが続けやすいと思います。"},{"author":"Bさん","daysAgo":2,"time":"07:45","text":"子育て世代には、保育園や幼稚園のお便りで紹介してもらう方法もあります。絵本の棚があることを伝えたいです。"},{"author":"Eさん","daysAgo":1,"time":"18:30","text":"大学の授業や地域活動の一環として、学生に選書や棚づくりを体験してもらえないでしょうか。"},{"author":"Cさん","daysAgo":1,"time":"21:10","text":"SNSの担当を決めて、週1回の投稿から始めてみませんか。棚の入れ替えの日に写真を撮るのはどうでしょう。"},{"author":"Eさん","daysAgo":0,"time":"11:05","text":"学生向けに、SNSで選書ボランティアを募る投稿を作ってみます。"}]},{"id":"books","title":"本の寄贈を増やす","purpose":"読み終えた本を届けてもらう呼びかけと、集まった本の生かし方。","summary":"時期を決めた呼びかけ、受け付け場所の案内、足りない種類を指定した呼びかけ。","sample":true,"posts":[{"author":"Cさん","daysAgo":9,"time":"10:20","text":"引っ越しや年度替わりは本を手放す人が多いので、その時期に寄贈を呼びかけると集まりやすいかもしれません。"},{"author":"Fさん","daysAgo":8,"time":"13:00","text":"寄贈の受け付け場所が分かりにくいという声を聞きました。ホームページで寄贈の案内を目立たせたいです。"},{"author":"Aさん","daysAgo":6,"time":"19:40","text":"絵本や児童書が足りない棚があると聞きます。種類を指定して寄贈を呼びかけるのもありですね。"},{"author":"Dさん","daysAgo":4,"time":"12:15","text":"企業の書庫整理のタイミングで声をかける手もあります。"},{"author":"Fさん","daysAgo":3,"time":"16:50","text":"集まった本の選書に、学生ボランティアに入ってもらえたら面白いと思います。"}]},{"id":"network","title":"理事のつながりを生かす","purpose":"それぞれの仕事や地域のつながりから、協力をお願いできそうな先を出し合います。","summary":null,"sample":true,"posts":[{"author":"Bさん","daysAgo":2,"time":"20:00","text":"それぞれの分野で、話を聞いてくれそうな人を一人ずつ挙げてみませんか。"},{"author":"Fさん","daysAgo":1,"time":"09:30","text":"紹介するときに使える短い説明文があると助かります。このホームページのリンクも送れそうです。"}]},{"id":"funds","title":"活動を支えるお金","purpose":"会員や寄付、協賛など、活動を続けるための資金の集め方。","summary":"会員の良さを具体的に伝える。寄付の使い道を、活動記録と合わせて見せる。","sample":true,"posts":[{"author":"Dさん","daysAgo":21,"time":"20:40","text":"会員になる良さを、もっと具体的に伝えたいです。総会に参加できることも魅力のひとつだと思います。"},{"author":"Aさん","daysAgo":19,"time":"08:10","text":"企業には、支援企業として紹介される形を提案しやすいと思います。"},{"author":"Fさん","daysAgo":16,"time":"17:25","text":"寄付の使い道を、活動記録と合わせて見せられると安心感があります。"},{"author":"Dさん","daysAgo":15,"time":"21:00","text":"新しい図書館の開設費は、クラウドファンディングで集める方法もありそうです。"}]},{"id":"page","title":"このページの使い方・要望","purpose":"理事のページの使い勝手や、ほしい機能を書き込む場所です。","summary":null,"sample":true,"posts":[{"author":"Aさん","daysAgo":0,"time":"08:30","text":"議題ごとに分かれていると、話が流れなくて見返しやすいですね。"}]}]}</script>
-<script src="../assets/js/wordmap.js?v=9baf9171" defer></script>
-<script src="../assets/js/board.js?v=9baf9171" defer></script>
-<!-- built 2026-10-27T02:09:18.378Z / board -->
+<script type="application/json" id="board-config">{"texts":{"pageTitle":"理事のページ｜NPO法人 情報ステーション","title":"理事のページ","loginLead":"理事向けのお知らせと、議題ごとに話し合える場です。理事の共通のID・パスワードで入ります。","loading":"読み込んでいます…","passLabel":"パスワード","submit":"ログイン","checking":"確認しています…","loginError":"IDかパスワードが違います。","loginEmpty":"IDとパスワードを入れてください。","loginBanned":"このIDの利用は止められています。事務局（管理者）に連絡してください。","loginNetwork":"通信できませんでした。電波やインターネットの状態を確かめて、もう一度お試しください。","forgot":"ID・パスワードが分からないときは、事務局（管理者）に聞いてください。","linkExpired":"このリンクは、期限が切れているか、すでに使われています。管理者に作り直してもらってください。","loggedOut":"ログアウトしました。","setupTitle":"準備中です","setupText":"理事のページは、使い始める準備をしています。使えるようになったら、管理者からお知らせします。","passwordTitle":"パスワードを決める","passwordLeadInvite":"{name}さん、ようこそ。この理事のページで使うパスワードを決めてください。","passwordLeadRecovery":"新しいパスワードを決めてください。","newPassLabel":"新しいパスワード","newPassConfirm":"新しいパスワード（もう一度）","passwordHint":"8文字以上。ほかのサービスと同じものは避けてください。","passwordSubmit":"決めて入る","passwordShort":"パスワードは8文字以上にしてください。","passwordMismatch":"2つの入力が違います。","passwordDone":"パスワードを決めました。","deniedTitle":"この理事のページを使う許可がありません","deniedText":"このIDは、理事のページの名簿に入っていません。事務局（管理者）に連絡してください。","suspendedText":"このIDの利用は止められています。事務局（管理者）に連絡してください。","backToSite":"ホームページに戻る","noScript":"このページを使うには、JavaScriptを有効にしてください。","logout":"ログアウト","signedInAs":"{name}さん","retry":"もう一度試す","tabs":{"home":"ホーム","news":"お知らせ","talk":"議論の場","admin":"管理"},"welcome":"理事向けのお知らせ、伝えるときの材料、議題ごとの話し合いの場です。","sharedNote":"ここに書いた内容は、ログインした理事どうしで共有されます（サーバーに保存）。ホームページには公開されません。","reload":"読み込む","newPosts":"新しい書き込みが{count}件あります。","topicsChanged":"議題に更新があります。","newNews":"新しいお知らせがあります。","updated":"最新の内容にしました。","networkError":"通信できませんでした。電波やインターネットの状態を確かめて、もう一度お試しください。","sessionExpired":"ログインの期限が切れました。もう一度ログインしてください。","notAllowed":"この操作はできません（権限がないか、すでに消えています）。","invalidInput":"内容を確かめてください。","sending":"送信しています…","sendFailed":"送信できませんでした。通信の状態を確かめて「もう一度送る」を押してください。書いた内容は消えていません。","retrySend":"もう一度送る","saveFailed":"保存できませんでした。通信の状態を確かめて、もう一度「保存する」を押してください。","deleteFailed":"削除できませんでした。通信の状態を確かめて、もう一度お試しください。","newsTitle":"お知らせ","newsLead":"事業ごとに分けて、お知らせ・活動記録・理事会の連絡をまとめています。","newsMore":"お知らせを見る","newsWrite":"お知らせを書く","newsEditTitle":"お知らせを直す","newsZone":"事業","newsKind":"種類","newsTitleLabel":"見出し","newsTitleEmpty":"見出しを入れてください。","newsBody":"本文（段落は空行で区切る）","newsSubmit":"載せる","newsPublished":"お知らせを載せました。","newsDeleteConfirm":"このお知らせを削除しますか？","types":{"notice":"お知らせ","record":"活動記録","meeting":"理事会"},"zoneAll":"すべての事業","zoneMore":"{zone}をすべて見る（{count}件）","zoneEmpty":"まだ載っていません。","zoneBack":"すべての事業へ戻る","countUnit":"{count}件","talkTitle":"議論の場","talkLead":"議題ごとに場所を分けています。話がほかの話題に流れていかないよう、続きは同じ議題に書き込みます。","talkMore":"議論の場へ","hotWordsTitle":"いま飛び交っている言葉","hotWordsNote":"最近の書き込みによく出る言葉ほど、大きく表示しています。","spacesTitle":"議題","topicsEmpty":"まだ議題はありません。「議題をつくる」から始めてください。","weekCount":"今週 {count}件","lastPost":"最後の書き込み {when}","noPosts":"まだ書き込みはありません。","addSpace":"議題をつくる","addSpaceTitle":"議題の名前","addSpacePurpose":"何を話し合うか（ひとこと）","addSpaceSubmit":"議題をつくる","addSpaceEmpty":"議題の名前を入れてください。","addSpaceDone":"「{title}」の議題をつくりました。","backToTalk":"議論の場へ戻る","topicBy":"{name}さんが{date}につくった議題","topicEdit":"議題を直す","topicDelete":"議題を削除","topicDeleteConfirm":"この議題を削除しますか？","topicDeleteConfirmPosts":"この議題と、その書き込み{count}件をすべて削除しますか？元に戻せません。","wordsTitle":"よく出ている言葉","wordsPeriod":"数える期間","wordsRecent":"最近","wordsAll":"これまで全部","wordsEmpty":"書き込みが増えると、よく出る言葉がここに表示されます。","wordsHint":"言葉を選ぶと、その言葉を含む書き込みだけを表示します。","postsTitle":"書き込み","postsCount":"{count}件","filterOn":"「{word}」を含む書き込み：{count}件","filterClear":"絞り込みを解除","composerTitle":"書き込む","postingAs":"{name}さんとして書き込みます（名前はログイン情報から自動で入ります）。","textLabel":"書き込む内容","postSubmit":"書き込む","postEmpty":"書き込む内容を入れてください。","postDone":"書き込みました。","postAlready":"前の送信が届いていました（二重には書き込まれていません）。","draftNote":"書きかけの内容は、この端末にだけ下書きとして残ります。送るまで、ほかの理事には見えません。","edit":"編集","editLabel":"書き込みを編集","editing":"編集中","save":"保存する","cancel":"やめる","delete":"削除","deleteYes":"削除する","deleteConfirm":"この書き込みを削除しますか？","deleteOtherConfirm":"{name}さんの書き込みを、管理者として削除しますか？","deleted":"削除しました。","edited":"（編集済み）","editedByAdmin":"（管理者が編集）","updatedDone":"保存しました。","copy":"コピー","copied":"コピーしました。","copyFailed":"コピーできませんでした。文字を長押しして選んでください。","you":"あなた","time":{"now":"たった今","minutes":"{n}分前","hours":"{n}時間前","yesterday":"昨日","days":"{n}日前"},"growthTitle":"目標と進み具合","growthPending":"数字は確認中です。理事会で決めた数字を、管理者が入れます。","growthCurrent":"いま","growthProjected":"開館見込みを入れると","growthProjectedShort":"見込み","growthTarget":"目標","growthYear":"目標の年度","growthAsOf":"いまの数の時点","growthAsOfPlaceholder":"例：2026年10月","strategyTitle":"成長戦略","strategyTitleDraft":"成長戦略（案）","directionLabel":"向かう先","unitMissing":"—","growthEdit":"目標と進み具合を編集","growthDraftLabel":"「案」として表示する（理事会で言葉を決めたら外す）","adminTitle":"管理","adminLead":"共通ID・管理用IDの管理、目標の数字、バックアップ、動作の確認ができます。管理者だけに表示されています。","membersTitle":"管理用ID","membersLead":"一人ずつのIDです（管理者など）。招待した人は、受け取ったリンクを開いてパスワードを決めると「利用中」になります。停止したIDは、すぐにデータを読めなくなります。","invite":"管理用IDを招待する","inviteName":"名前（掲示板に表示）","inviteEmail":"メールアドレス（ログインに使う）","inviteRole":"役割","inviteSubmit":"招待のリンクを作る","inviteNameEmpty":"名前を入れてください。","inviteEmailInvalid":"メールアドレスの形を確かめてください。","inviteDone":"{name}さんの招待リンクを作りました。","reissueDone":"{name}さんのログイン用リンクを作りました。","linkLabel":"ログイン用リンク","copyLink":"リンクをコピー","linkNote":"このリンクは、LINE やメールで本人にだけ送ってください。1回だけ使え、時間がたつと使えなくなります（使えないときは作り直します）。リンクを開くと、本人がパスワードを決めます。","roleMember":"理事","roleAdmin":"管理者","statuses":{"invited":"招待中","active":"利用中","suspended":"停止中"},"reissue":"ログイン用リンクを作る","suspend":"利用を停止","resume":"利用を再開","suspendConfirm":"{name}さんの利用を停止しますか？停止すると、すぐに理事のページを読めなくなります。","makeAdmin":"管理者にする","makeMember":"理事にする","rename":"名前を変える","renameLabel":"新しい名前","backupTitle":"バックアップ","backupLead":"お知らせ・議題・書き込み・名簿（メールアドレスを含む）を、1つのファイルに保存します。団体のパソコンなど安全な場所に保管してください。戻し方は docs/board-operations.md にあります。","backupButton":"バックアップを保存する","backupDone":"{file} を保存しました（議題{topics}件・書き込み{posts}件・お知らせ{news}件・名簿{members}人）。","selftestTitle":"動作の確認（自己診断）","selftestLead":"本番のログイン・保存・権限が正しく働いているかを、テスト用の理事を一時的に作って確かめます。数秒で終わり、テスト用のデータは自動で消えます。","selftestButton":"自己診断を実行する","selftestRunning":"確認しています…","selftestOk":"すべて合格しました（{passed}/{total}）。","selftestNg":"合格しなかった項目があります（{passed}/{total}）。","copyResult":"結果をコピー","passMark":"合格","failMark":"不合格","legacyTitle":"この端末に残っている、以前の試作版の書き込み","legacyLead":"以前の試作版では、書き込みがこの端末の中だけに保存されていました（ほかの理事には見えていません）。{count}件あり、まだ共有の掲示板に送っていないものは{unsent}件です。何もしなければ、そのまま残ります。","legacyOpen":"内容を確かめる","legacyFrom":"元の議題：","legacySent":"送り済み","legacyTarget":"送る先の議題","legacyChoose":"選んでください","legacyPick":"選んだ書き込みを共有の掲示板に送る","legacyNonePicked":"送る書き込みを選んでください。","legacyNoTarget":"送る先の議題を選んでください（なければ、先に議題をつくってください）。","legacyConfirm":"あなた（{name}）の名前で、選んだ{count}件を「{topic}」に書き込みます。ほかの理事が読めるようになります。送りますか？","legacySend":"送る","legacyPrefix":"（以前の試作版で {date} に書いた内容）","legacyDone":"{count}件を共有の掲示板に送りました。この端末の元の書き込みは、そのまま残しています。","legacyPartial":"{count}件のうち{done}件を送ったところで、通信できなくなりました。もう一度押すと、残りを送ります（送った分は二重になりません）。","legacyDelete":"この端末の以前の書き込みを消す","legacyDeleteConfirm":"この端末に残っている以前の書き込み（{count}件）を消します。共有の掲示板には影響しません。消しますか？","legacyDeleted":"この端末の以前の書き込みを消しました。","idLabel":"ID","idHint":"管理用IDの人は、メールアドレスを入れます。","passwordChanged":"共通IDのパスワードが変わりました。新しいパスワードでログインし直してください。","signedInShared":"共通IDで利用中","nameLabel":"名前（書いた人として表示されます）","nameHint":"共通IDで入っているため、名前は書く人が入れます。この端末で覚えます。","nameEmpty":"名前を入れてください（40文字まで）。","sharedEditNote":"直したり消したりできるのは、この端末で書いた書き込みだけです。","legacyConfirmShared":"選んだ{count}件を「{topic}」に書き込みます。名前は、以前の書き込みにある名前（なければ「{name}」）で表示されます。ほかの理事が読めるようになります。送りますか？","legacyNameHint":"以前の書き込みに名前がないときは、この名前で表示します。","sharedTitle":"共通ID（理事みんなで使うID）","sharedLead":"理事は、このID・パスワードで入ります。名前は書くときに各自が入れます。パスワードを変えると、それまでにログインしていた端末は、すぐに使えなくなります。","sharedNone":"まだ共通IDがありません。理事に伝えるIDとパスワード（前と同じもの）を入れて登録してください。","sharedIdLabel":"ID","sharedIdHint":"英字の小文字・数字と . _ - が使えます（3〜40文字）。大文字で入れても、小文字として登録します。","sharedIdInvalid":"IDは、英数字と . _ - の3〜40文字にしてください（最初は英数字）。","sharedPassLabel":"パスワード","sharedPass2Label":"パスワード（確認のため、もう一度）","sharedPassShort":"パスワードは6〜72文字にしてください。","sharedPassMismatch":"2つのパスワードが違います。","sharedCreate":"共通IDを登録する","sharedCreated":"共通IDを登録しました。理事のみなさんに、IDとパスワードを伝えてください。","sharedDisplayName":"理事（共通ID）","sharedChange":"パスワードを変える","sharedChangeLead":"新しいパスワードを2回入れます。変えると、それまでにログインしていた端末は、すぐに使えなくなります（新しいパスワードで入り直します）。","sharedChangeSubmit":"新しいパスワードにする","sharedChanged":"パスワードを変えました。理事のみなさんに、新しいパスワードを伝えてください。","sharedSuspendConfirm":"共通IDを止めると、理事のみなさんは、すぐに読み書きできなくなります。止めますか？","sharedSuspended":"共通IDを止めました。","sharedResumed":"共通IDを再開しました。"},"wordmap":{"halfLifeDays":7,"maxWords":24,"glossary":["管理組合","空き店舗","福祉施設","共有スペース","商店街","商業施設","選書","寄贈","絵本","児童書","会員","寄付","支援企業","クラウドファンディング","活動記録","理事会","見学","子育て世代","保育園","幼稚園","学生","ボランティア","書庫整理","年度替わり","受け付け場所","開設費","説明文","使い道","待合スペース","棚づくり","入れ替え"],"stopwords":["情報ステーション","理事","皆さん","自分","今回","今後","以前","最近","必要","大事","可能","場合","部分","一緒","意見","感じ","思い","方法","本当","全体","以上","次回","今日","今週","先週","来週","明日","昨日","一つ","三つ","人","方","時","今","後","前","中","上","下","日","月","年","回","件","度","点","声","気","話","力","先","次","他","何","私","皆","案","例","数","側","的","手","目","形","所","事","物","者","等","化","性","面","間","週","種類","時期","一環","向け","魅力","一人","一冊","具体的","企業"]},"shareKit":{"title":"伝えるときの材料","lead":"ひとりの言葉だけでは届かない人にも、理事それぞれの言葉なら届きます。紹介するときは、この材料に、あなたの分野の言葉を足してください。","items":[{"label":"ひとことで","text":"本をきっかけに、人が出会う。"},{"label":"強み","text":"棚の本が、毎月入れ替わる図書館です。寄贈で集まった本を、貸出しのデータとボランティアの選書をもとに、毎月入れ替えています。"},{"label":"たとえるなら","text":"民間図書館は、まちの土台（OS）です。いつでも立ち寄れる図書館の上で、催しや地域の活動が動きます。催しはその日だけでも、図書館はまちに残ります。"},{"label":"数字","text":"全国の民間図書館に並ぶ寄贈本は、約14万冊（2025年度時点）。"},{"label":"見てもらうページ","text":"https://www.infosta.org/","note":"新しいホームページを公開したら、そのURLに変えます。"}],"copy":"コピー","copied":"コピーしました。","copyFailed":"コピーできませんでした。文章を長押しして選んでください。"},"connection":{"supabaseUrl":null,"publishableKey":null,"idDomain":"infosta.org","verifiedAt":null}}</script>
+<script src="../assets/js/vendor/supabase.js?v=0037c8ae" defer></script>
+<script src="../assets/js/wordmap.js?v=0037c8ae" defer></script>
+<script src="../assets/js/board.js?v=0037c8ae" defer></script>
+<!-- built 2026-10-27T07:09:39.258Z / board -->
 </body>
 </html>

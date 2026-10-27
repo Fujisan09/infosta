@@ -1126,6 +1126,10 @@ p { margin: 0; text-wrap: pretty; }
 .person-open::after { content: ""; position: absolute; inset: 0; border-radius: 18px; }
 .person-open:focus-visible { outline: none; }
 .people-empty { padding: 24px 0; color: var(--color-muted); }
+/* 公開できる理事がまだいないとき：分野の棚だけを並べ、名前のない背表紙を置く（飾り） */
+.shelfwall--empty .shelf-title { cursor: default; }
+.spine--blank { opacity: .55; box-shadow: inset 0 0 0 1px rgba(35, 24, 21, .08); }
+.shelfwall--empty + .people-empty { padding-top: 16px; color: var(--color-text); font-weight: 700; }
 /* 分野を選んでいないときは、最初の数人（1列6人・2列8人・3列9人）だけを出す。残りは「すべての理事を表示する」で */
 .people-list.is-collapsed > .person-item:nth-child(n+7) { display: none; }
 @media (min-width: 640px) {
