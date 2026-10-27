@@ -124,6 +124,13 @@
   const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
   const linkType = hashParams.get('access_token') ? hashParams.get('type') : null;
   const linkError = hashParams.get('error_code') || (hashParams.get('error') ? hashParams.get('error') : null);
+  // 管理の画面で作るログイン用リンク：このページのアドレスの # に、確かめ用の値（token_hash）と種類を付けたもの。
+  // 開いただけでは使わず、本人がパスワードを決めて押したときに1回だけ使う（LINE・メールのプレビューや安全確認が先に開いても、無駄にならない）
+  let linkToUse = (() => {
+    const tokenHash = hashParams.get('token_hash');
+    const type = hashParams.get('type');
+    return tokenHash && /^[A-Za-z0-9_-]{8,200}$/.test(tokenHash) && /^(invite|recovery)$/.test(type || '') ? { tokenHash, type } : null;
+  })();
   // この端末の印（乱数）。共通IDで書いた書き込みを、この端末から直す・消すときに使う（データベースには、そのままでは保存しない）
   let deviceKey = device.get(DEVICE_KEY);
   if (!deviceKey || !/^[0-9a-f]{64}$/.test(deviceKey)) {
@@ -305,9 +312,12 @@
   const passwordSubmit = q('[data-password-submit]');
   let settingPassword = false;
   async function showPassword(kind) {
-    const me = await api(sb.rpc('board_me'));
-    const name = me.data && me.data.display_name ? me.data.display_name : '';
-    q('[data-password-lead]').textContent = kind === 'recovery' ? T.passwordLeadRecovery : fill(T.passwordLeadInvite, { name });
+    let name = '';
+    if (!linkToUse) {
+      const me = await api(sb.rpc('board_me'));
+      name = me.data && me.data.display_name ? me.data.display_name : '';
+    }
+    q('[data-password-lead]').textContent = kind === 'recovery' ? T.passwordLeadRecovery : name ? fill(T.passwordLeadInvite, { name }) : T.passwordLeadWelcome;
     show('password');
     q('#password-title').focus();
   }
@@ -322,12 +332,28 @@
     settingPassword = true;
     passwordSubmit.disabled = true;
     passwordSubmit.textContent = T.checking;
+    const finish = () => {
+      settingPassword = false;
+      passwordSubmit.disabled = false;
+      passwordSubmit.textContent = T.passwordSubmit;
+    };
+    if (linkToUse) {
+      // ここで初めてリンクを使う（1回だけ）。通信できなかったときは、リンクを残してもう一度押せるようにする
+      const v = await api(sb.auth.verifyOtp({ token_hash: linkToUse.tokenHash, type: linkToUse.type }));
+      if (v.kind === 'network' || v.kind === 'server') { finish(); passwordError.textContent = T.networkError; return; }
+      if (v.kind !== 'ok' || !v.data || !v.data.session) {
+        finish();
+        linkToUse = null;
+        passwordForm.reset();
+        showLogin(v.error && v.error.code === 'user_banned' ? T.loginBanned : T.linkExpired);
+        return;
+      }
+      linkToUse = null;
+    }
     const r = await api(sb.auth.updateUser({ password: p1 }));
     let done = r.kind === 'ok';
     if (done) done = (await api(sb.rpc('board_complete_signup'))).kind === 'ok';
-    settingPassword = false;
-    passwordSubmit.disabled = false;
-    passwordSubmit.textContent = T.passwordSubmit;
+    finish();
     if (!done) { passwordError.textContent = r.kind === 'ok' ? T.networkError : r.error && r.error.code === 'weak_password' ? T.passwordShort : failText(r); return; }
     passwordForm.reset();
     announce(T.passwordDone);
@@ -527,7 +553,11 @@
     }
     lastKey = key;
   }
-  window.addEventListener('hashchange', () => { if (!/access_token|error_code/.test(window.location.hash)) route(); });
+  window.addEventListener('hashchange', () => {
+    // 開いているページに、ログイン用リンクを貼って開いたとき：読み込み直して、パスワードを決める画面から始める
+    if (/(^#|&)token_hash=/.test(window.location.hash)) { window.location.reload(); return; }
+    if (!/access_token|error_code/.test(window.location.hash)) route();
+  });
 
   /* ───── ワードマップ ───── */
   const WM_OPTIONS = (extra) => {
@@ -1457,6 +1487,23 @@
     p.appendChild(selftestNode());
   }
 
+  /**
+   * 管理の窓口が返すリンク（認証のサーバーのアドレス。開いた瞬間に使われる）を、
+   * このページのアドレスの # に確かめ用の値を付けた形にする。# 以降はサーバーに送られないので、
+   * LINE・メールのプレビューや安全確認が先にアドレスを開いても、リンクは使われない（本人がパスワードを決めたときに使う）
+   */
+  function personalLinkOf(actionLink) {
+    try {
+      const u = new URL(actionLink);
+      const token = u.searchParams.get('token');
+      const type = u.searchParams.get('type');
+      if (!token || !/^[A-Za-z0-9_-]{8,200}$/.test(token) || !/^(invite|recovery)$/.test(type || '')) return actionLink;
+      return `${window.location.origin}${window.location.pathname}#token_hash=${encodeURIComponent(token)}&type=${type}`;
+    } catch (e) {
+      return actionLink;
+    }
+  }
+
   function linkBox(text, link) {
     const status = el('p', { class: 'kit-status', role: 'status' });
     return el('div', { class: 'link-box', 'data-link-box': true }, [
@@ -1645,7 +1692,7 @@
       sending = false;
       busy(submit, false, T.inviteSubmit);
       if (!r.ok) { error.textContent = r.message; return; }
-      adminState.link = { text: fill(T.inviteDone, { name }), link: r.data.link };
+      adminState.link = { text: fill(T.inviteDone, { name }), link: personalLinkOf(r.data.link) };
       await loadMembers();
       renderAdmin();
       const box = q('[data-link-box] input');
@@ -1667,7 +1714,7 @@
         renderAdmin();
         if (r.data && r.data.link) { const box = q('[data-link-box] input'); if (box) box.focus(); }
       };
-      if (m.status !== 'suspended') actions.push(act(T.reissue, (e) => run(e.target, { action: 'reissue', member_id: m.id, redirect_to: window.location.origin + window.location.pathname }, (d) => { adminState.link = { text: fill(T.reissueDone, { name: m.display_name }), link: d.link }; }), { 'data-label': T.reissue }));
+      if (m.status !== 'suspended') actions.push(act(T.reissue, (e) => run(e.target, { action: 'reissue', member_id: m.id, redirect_to: window.location.origin + window.location.pathname }, (d) => { adminState.link = { text: fill(T.reissueDone, { name: m.display_name }), link: personalLinkOf(d.link) }; }), { 'data-label': T.reissue }));
       if (!isMe && m.status !== 'suspended') actions.push(act(T.suspend, (e) => {
         const li = e.target.closest('li');
         if (q('.confirm-row', li)) return;
@@ -1850,6 +1897,12 @@
   /* ───── はじめに ───── */
   (async () => {
     show('loading');
+    if (linkToUse) {
+      // アドレスから値を消し（画面やブラウザの履歴に残さない）、パスワードを決める画面を出す。リンクは、決めて押したときに使う
+      try { window.history.replaceState(null, '', window.location.pathname + window.location.search); } catch (e) { /* 何もしない */ }
+      await showPassword(linkToUse.type);
+      return;
+    }
     const { data } = await sb.auth.getSession();
     if (linkError) {
       try { window.history.replaceState(null, '', window.location.pathname + window.location.search); } catch (e) { /* 何もしない */ }
