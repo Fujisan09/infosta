@@ -1,0 +1,146 @@
+# 理事のページ（Supabase の Free プロジェクト infosta-board）の自動停止対策
+#
+# 1日4回、データベースに「SELECT 1」だけを送り、答えが 1 で返ったときだけ成功にします（表は読みません）。
+#   * 接続には、表・関数の権限を持たない接続専用のロール infosta_keepalive を使います
+#     （作り方：元のソースの supabase/ops/keepalive-role.sql。パスワードは Secret「SUPABASE_KEEPALIVE_DB_PASSWORD」）。
+#   * つなぎ先は Supabase の Session pooler（IPv4。GitHub の実行環境から届く）。
+#   * 失敗したら：このジョブが失敗になり（GitHub から、このワークフローを作った人にメール）、Issue でも知らせます。
+#     成功に戻ると、その Issue を閉じます。
+#   * GitHub は、公開リポジトリに60日更新がないと定期実行を止めます。50日を過ぎたら Issue で知らせます。
+#
+# このファイルの元は、元のソースの pages-repo/.github/workflows/supabase-keepalive.yml です
+# （scripts/deploy-pages.mjs が公開用のリポジトリへ置きます。リポジトリで直接直すと、次の公開で元に戻ります）。
+name: Supabase keepalive（理事のページ）
+
+on:
+  schedule:
+    # UTC。日本時間の 3:23・9:23・15:23・21:23（GitHub の混み具合で遅れることがあります）
+    - cron: '23 0,6,12,18 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/supabase-keepalive.yml'
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: supabase-keepalive
+  cancel-in-progress: false
+
+env:
+  ISSUE_TITLE: 理事のページの自動停止対策（Supabase）が失敗しています
+  STALE_TITLE: リポジトリの更新が50日ありません（理事のページの自動停止対策が止まる前に）
+  PROJECT_URL: https://ewgkseetunwhjxijutrj.supabase.co
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: psql を確かめる
+        timeout-minutes: 3
+        run: |
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+          fi
+          psql --version
+
+      - name: データベースに SELECT 1 を送る（表は読まない）
+        id: ping
+        timeout-minutes: 4
+        env:
+          PGHOST: aws-0-ap-northeast-2.pooler.supabase.com
+          PGPORT: '5432'
+          PGUSER: infosta_keepalive.ewgkseetunwhjxijutrj
+          PGDATABASE: postgres
+          PGSSLMODE: require
+          PGCONNECT_TIMEOUT: '15'
+          PGAPPNAME: infosta-keepalive
+          PGPASSWORD: ${{ secrets.SUPABASE_KEEPALIVE_DB_PASSWORD }}
+          KEEPALIVE_ATTEMPTS: '3'
+          KEEPALIVE_WAIT_SECONDS: '20'
+        run: |
+          # パスワードは環境変数（Secret）からだけ読み、表示しない。表・関数には触れない
+          set -u
+          if [ -z "${PGPASSWORD:-}" ]; then
+            echo "::error::Secret「SUPABASE_KEEPALIVE_DB_PASSWORD」が登録されていません"
+            exit 2
+          fi
+          attempts="${KEEPALIVE_ATTEMPTS:-3}"
+          wait_seconds="${KEEPALIVE_WAIT_SECONDS:-20}"
+          i=1
+          while [ "$i" -le "$attempts" ]; do
+            started=$(date +%s)
+            if out=$(timeout 45 psql -X -q -A -t -v ON_ERROR_STOP=1 -c 'select 1' 2>&1); then
+              if [ "$(printf '%s' "$out" | tr -d '[:space:]')" = "1" ]; then
+                echo "OK：SELECT 1 の答えが 1 で返りました（${i}回目・$(( $(date +%s) - started ))秒）"
+                exit 0
+              fi
+              echo "::warning::答えが 1 ではありませんでした（${i}回目）"
+            else
+              echo "::warning::問い合わせに失敗しました（${i}回目）：$(printf '%s' "$out" | tr '\n' ' ' | cut -c1-300)"
+            fi
+            if [ "$i" -lt "$attempts" ]; then sleep $(( i * wait_seconds )); fi
+            i=$(( i + 1 ))
+          done
+          echo "::error::データベースへの問い合わせが ${attempts} 回とも成功しませんでした"
+          exit 1
+
+      - name: 失敗を Issue で知らせる
+        if: failure()
+        timeout-minutes: 2
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          # 鍵を付けずにプロジェクトの API を呼び、動いているか（401 が返るか）だけを見る（中身は読まない）
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 "$PROJECT_URL/rest/v1/" || true)
+          case "$code" in
+            401) api="プロジェクトの API は応答しています（HTTP 401）。パスワード・ロール・つなぎ先の設定を確かめてください。" ;;
+            000) api="プロジェクトの API から応答がありません。一時停止しているか、つながらない可能性があります。" ;;
+            *)   api="プロジェクトの API の応答は HTTP ${code} でした。一時停止している可能性があります。" ;;
+          esac
+          now=$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M')
+          body=$(printf '%s\n\n- 日時：%s（日本時間）\n- きっかけ：%s\n- 記録：%s\n- %s\n\nSupabase の画面で infosta-board の状態を確かめ、一時停止していたら「Resume project」を押してください。直ったら、次の成功でこの Issue は自動で閉じます。\n\n@%s' \
+            "データベースに SELECT 1 を送る確認が失敗しました。" "$now" "$GITHUB_EVENT_NAME" "$RUN_URL" "$api" "$GITHUB_REPOSITORY_OWNER")
+          number=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --limit 200 --json number,title \
+            --jq "map(select(.title == env.ISSUE_TITLE)) | .[0].number // empty")
+          if [ -n "$number" ]; then
+            gh issue comment "$number" --repo "$GITHUB_REPOSITORY" --body "$body"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$ISSUE_TITLE" --body "$body"
+          fi
+
+      - name: 成功に戻ったら Issue を閉じる
+        if: success()
+        timeout-minutes: 2
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          numbers=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --limit 200 --json number,title \
+            --jq "map(select(.title == env.ISSUE_TITLE)) | .[].number")
+          for n in $numbers; do
+            gh issue close "$n" --repo "$GITHUB_REPOSITORY" --comment "$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M')（日本時間）に SELECT 1 が成功しました。閉じます。"
+          done
+
+      - name: リポジトリの更新が止まっていないか（60日で定期実行が止まる）
+        if: success()
+        timeout-minutes: 2
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          last=$(gh api "repos/$GITHUB_REPOSITORY/commits?per_page=1" --jq '.[0].commit.committer.date')
+          days=$(( ( $(date +%s) - $(date -d "$last" +%s) ) / 86400 ))
+          echo "最後の更新から ${days} 日"
+          if [ "$days" -lt 50 ]; then exit 0; fi
+          open=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --limit 200 --json number,title \
+            --jq "map(select(.title == env.STALE_TITLE)) | length")
+          if [ "$open" = "0" ]; then
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$STALE_TITLE" --body "$(printf '%s\n\n%s\n\n@%s' \
+              "公開リポジトリに60日更新がないと、GitHub がこの定期実行（Supabase keepalive）を止めます。いまは最後の更新から ${days} 日です。" \
+              "ホームページを更新して公開し直すか、止まったときは Actions の画面でこのワークフローの「Enable workflow」を押してください。" \
+              "$GITHUB_REPOSITORY_OWNER")"
+          fi

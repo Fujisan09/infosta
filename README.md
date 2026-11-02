@@ -11,5 +11,7 @@
 
 ページの文章やデータを直すときは、元のソース（非公開で管理）を編集してから書き出し直します。
 
+`.github/workflows/supabase-keepalive.yml` は、理事のページ（Supabase の無料プラン）が使われない日が続いて自動で止まらないよう、1日4回データベースに「SELECT 1」だけを送る定期実行です。表は読みません。接続には権限を持たない専用のロールを使い、パスワードは GitHub の Secret にだけ置いています。
+
 文字（Webフォント）：Zen Kaku Gothic New・Outfit（どちらも SIL Open Font License 1.1。ライセンスの文書は assets/fonts/ にあります）
 理事のページの通信：supabase-js（MIT License。assets/js/vendor/supabase.js の先頭に記載）
