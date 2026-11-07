@@ -1,0 +1,117 @@
+/*
+ * 確認用の版（/infosta/teian/）だけで読み込むスタイル。公開中のページ（/infosta/）には入らない。
+ * 強みの区画に足した「続けやすい理由」（points）と「図書館の声」（voices）、ご意見を反映した箇所の印（review-tag）。
+ */
+
+/* PC：区画の中の並び。説明の下に「続けやすい理由」、事例の下に「図書館の声」 */
+@media (min-width: 900px) {
+  .strength-slide {
+    grid-template-areas: "msg copy" "points points" "flow flow" "places places" "voices voices" "link link";
+  }
+  .strength-points { grid-area: points; }
+  .strength-voices { grid-area: voices; }
+}
+
+/* ご意見を反映した箇所の印（確認用の版だけ） */
+.review-tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: #FFE7A3;
+  color: #2B2100;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: .02em;
+}
+
+/* 続けやすい理由：要点のカードを2つ */
+.strength-points { display: grid; gap: 14px; }
+.strength-points-title,
+.strength-voices-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, .86);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.point-list,
+.voice-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.point {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 24px 26px 26px;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .08);
+}
+.point-title {
+  color: #FFFFFF;
+  font-family: var(--font-family-display);
+  font-size: calc(var(--font-size-body) * 1.2);
+  font-weight: 800;
+  line-height: 1.5;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.point-text { color: rgba(255, 255, 255, .9); line-height: 1.85; }
+
+/* 図書館の声：声が届くまでは、点線の「準備中」の枠 */
+.strength-voices { display: grid; gap: 14px; }
+.strength-voices-note { color: rgba(255, 255, 255, .84); font-size: 15px; line-height: 1.8; }
+.voice {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 22px 24px;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .05);
+}
+.voice--pending { border: 1.5px dashed rgba(255, 255, 255, .4); background: transparent; }
+.voice-who {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  color: #FFFFFF;
+  font-family: var(--font-family-display);
+  font-size: 17px;
+  font-weight: 700;
+}
+.voice-status {
+  display: inline-flex;
+  padding: 1px 10px;
+  border: 1px solid var(--color-strength-accent);
+  border-radius: 999px;
+  color: var(--color-strength-accent);
+  font-family: var(--font-family-base, inherit);
+  font-size: 14px;
+  font-weight: 700;
+}
+.voice-quote { margin: 0; color: #FFFFFF; font-size: calc(var(--font-size-body) * 1.06); line-height: 1.85; }
+.voice-text { color: rgba(255, 255, 255, .84); font-size: 15px; line-height: 1.8; }
+
+@media (max-width: 719px) {
+  .point-list,
+  .voice-list { grid-template-columns: 1fr; gap: 10px; }
+  .point { padding: 20px 20px 22px; }
+  .voice { padding: 18px 20px; }
+}
+
+@media print {
+  .point, .voice { background: #FFFFFF !important; color: #000000 !important; }
+}
