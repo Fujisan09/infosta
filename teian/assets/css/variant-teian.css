@@ -30,7 +30,8 @@
 /* 続けやすい理由：要点のカードを2つ */
 .strength-points { display: grid; gap: 14px; }
 .strength-points-title,
-.strength-voices-title {
+.strength-voices-title,
+.strength-places-title:has(.review-tag) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
